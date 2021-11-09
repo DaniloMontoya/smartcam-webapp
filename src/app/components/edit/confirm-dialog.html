@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Estás seguro que quieres {{data.dialog}} este vehículo?</h1>
+<div mat-dialog-content>
+    <p>Quieres dejar una motivo para esta decisión?</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Lorem ipsum...</mat-label>
+        <input matInput [(ngModel)]="message">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+    <button [hidden]="data.dialog !== 'apagar'" mat-raised-button color="primary" (click)="shutdown()" cdkFocusInitial>Apagar Vechículo</button>
+    <button [hidden]="data.dialog !== 'desbloquear'" mat-raised-button color="primary" (click)="unlock()" cdkFocusInitial>Desbloquear Vechículo</button>
+</div>
