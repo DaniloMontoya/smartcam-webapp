@@ -1,0 +1,65 @@
+<mat-card style="z-index: 10; position: absolute; margin: 25px 25px 25px 25px; right: 0;">
+    <button class="small_mat_button" (click)="minimize_carlist = !minimize_carlist" mat-button style="position: absolute;right: 0; top: 0;">
+      <mat-icon [hidden]="minimize_carlist" class="mat-18">expand_less</mat-icon>
+      <mat-icon [hidden]="!minimize_carlist" class="mat-18">expand_more</mat-icon>
+    </button>
+    <br>
+    <mat-card-title>Lista de Vehiculos</mat-card-title>
+    <mat-card-subtitle>Vehiculos disponibles</mat-card-subtitle>
+    <div [hidden]="minimize_carlist">
+        <mat-form-field appearance="standard">
+            <mat-label>Buscar vehiculos</mat-label>
+            <input matInput placeholder="ABC123..." [(ngModel)]="search">
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-hint>Placa</mat-hint>
+        </mat-form-field>
+        <mat-chip-list>
+            <mat-chip *ngIf="selectedDevice" [removable]="true" (removed)="selectedDevice=null">
+                <mat-icon color="primary" matSuffix>push_pin</mat-icon>
+                {{selectedDevice.licensePlate}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <br>
+        </mat-chip-list>
+        <mat-list>
+            <mat-list-item *ngFor="let device of GPSData | filter:search; let i = index" (mouseover)="isChangedBlock[i] = true" (mouseout)="isChangedBlock[i] = false">
+                <button mat-button (click)="centerViewToDevice(device)" style="width: 100%;position: absolute; text-align: left; margin-left: -25px;">
+                <mat-icon [ngClass]="{'red-icon': device?.ignition === 'Off', 'green-icon': device?.ignition === 'On'}" style="margin-right: 8px;">fiber_manual_record</mat-icon>
+                <mat-icon *ngIf="device.vehicle === 'BIKE'" matSuffix>two_wheeler</mat-icon>
+                <mat-icon *ngIf="device.vehicle !== 'BIKE'" matSuffix>directions_car</mat-icon> {{device?.licensePlate}} <mat-icon style="margin-left: 16px;" [hidden]="!isChangedBlock[i]" color="primary" matSuffix>push_pin</mat-icon>
+              </button>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</mat-card>
+
+<div id="map" class="map"></div>
+
+<div id="popup" class="ol-popup card border-left-primary" hidden>
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <!-- <div id="popup-content"> -->
+
+    <div class="card-body d-flex p-1">
+        <div class="d-flex flex-column mx-2">
+            <h6 id="plate" class="text-muted"></h6>
+            <h6 id="spd" class="text-muted"></h6>
+            <h6 id="longitude" class="text-muted"></h6>
+            <h6 id="latitude" class="text-muted"></h6>
+            <div class="small_mat_button">
+                <button [routerLink]="['/streaming',popDevice?.imei]" mat-button><mat-icon color="primary">videocam</mat-icon></button>
+                <button [hidden]="path_is_drawn" (click)="loadPathData(popDevice?.activeIdRoute)" mat-button>
+                  <mat-icon color="primary">route</mat-icon>
+                </button>
+                <button [hidden]="!path_is_drawn" (click)="removePath()" mat-button>
+                  <mat-icon color="warn">clear</mat-icon>
+                </button>
+                <button [routerLink]="['/edit',popDevice?.imei]" mat-button><mat-icon color="primary">edit</mat-icon></button>
+                <button [routerLink]="['/stats',popDevice?.imei]" mat-button><mat-icon color="primary">bar_chart</mat-icon></button>
+                <button [hidden]="popDevice?.ignition === 'Off'" (click)="openTurnOffDialog({vehicle: popDevice})" mat-button><mat-icon class="green-icon">power_settings_new</mat-icon></button>
+                <button [hidden]="popDevice?.ignition === 'On'" (click)="openUnlockDialog({vehicle: popDevice})" mat-button><mat-icon color="warn">power_settings_new</mat-icon></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- </div> -->
+</div>

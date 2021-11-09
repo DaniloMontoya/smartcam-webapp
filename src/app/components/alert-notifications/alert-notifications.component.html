@@ -1,0 +1,19 @@
+<div *ngFor="let item of data.notifications">
+    <div *ngIf="item" class="snackbar-red">
+        <div class="row">
+            <div class="col-4">
+                <mat-icon class="mat-18" style="margin: 16px;">warning_amber</mat-icon>
+            </div>
+            <div class="col-8">
+                <button mat-button (click)="data.deleteAlert(item?.imei)" style="float: right"><mat-icon style="font-size: 16px;">close</mat-icon></button>
+                <div style="max-width: 256px; word-wrap: break-word; margin-top: 24px; font-size: 14px;">
+                    {{item.message}}
+                </div>
+            </div>
+        </div>
+        <button (click)="data.clickAlert(item?.imei)" style="margin: 4px;" mat-button>{{item.title}}</button>
+        <div style="float: right; font-size: 10px; margin: 16px">
+            {{item.date | date:'medium'}}
+        </div>
+    </div>
+</div>

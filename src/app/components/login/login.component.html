@@ -1,0 +1,53 @@
+<div id="mySidebar" class="sidebar">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button (click)="showRegister()" class="btn text-primary" style="background-color:transparent; margin-top: 1%; margin-left: 96%;"><i class="fas fa-times fa-2x"></i></button>
+                <img src="../../../assets/moviint-logo-vector-color.svg" style="margin-top: 10%; margin-left: 36%; height: 177px; width: 255px;">
+                <div style="width: 345px; margin: 0 auto;">
+                    <br>
+                    <input [(ngModel)]="user_form.name" type="text" class="form-control custom-input rounded-pill" placeholder="Nombre Completo" required autofocus>
+                    <br>
+                    <input [(ngModel)]="user_form.user" type="text" class="form-control custom-input rounded-pill" placeholder="Usuario" required autofocus>
+                    <br>
+                    <input [(ngModel)]="user_form.mail" type="email" class="form-control custom-input rounded-pill" placeholder="Correo Electrónico" required autofocus>
+                    <br>
+                    <input [(ngModel)]="user_form.confirm_mail" type="email" class="form-control custom-input rounded-pill" placeholder="Confirmar Correo Electrónico" required autofocus>
+                    <br>
+                    <input [(ngModel)]="user_form.password" type="password" class="form-control custom-input rounded-pill" placeholder="Contraseña" required>
+                    <br>
+                    <input [(ngModel)]="user_form.confirm_password" type="password" class="form-control custom-input rounded-pill" placeholder="Confirmar Contraseña" required>
+                    <div class="d-grid gap-2">
+                        <br>
+                        <button class="btn btn-info btn-lg rounded-pill text-light">Crear Usuario</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 text-light" style="margin-top: 50%;" [ngClass]="{'fade-out': showsRegister}">
+            <h1 class="fading i02">Tu aliado en soluciones</h1>
+            <h1 class="fading i03"><strong>tecnológicas e innovadoras</strong></h1>
+        </div>
+        <div class="col-sm-4">
+            <div [ngClass]="{'fade-out': showsRegister}" class="login-box rounded-right fading i01">
+                <img src="../../../assets/moviint-logo-vector.svg" style="margin-top: 56px; margin-left: 130px; height: 162px; width: 197px;">
+                <div style="width: 345px; margin: 0 auto;">
+                    <br>
+                    <input [(ngModel)]="user_form.user" type="text" class="form-control custom-input rounded-pill" placeholder="Usuario" required autofocus>
+                    <br>
+                    <input [(ngModel)]="user_form.password" type="password" class="form-control custom-input rounded-pill" placeholder="Contraseña" required>
+                    <div class="d-grid gap-2">
+                        <br>
+                        <button (click)="auth.login(user_form)" class="btn btn-info btn-lg rounded-pill text-light">Iniciar Sesión</button>
+                        <button (click)="showRegister()" class="btn btn-outline-light btn-lg rounded-pill">Registrarse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

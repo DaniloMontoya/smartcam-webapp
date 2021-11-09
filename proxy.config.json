@@ -1,0 +1,12 @@
+{
+    "/rest": {
+        "target": "http://200.91.192.68:8088/",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/cities": {
+        "target": "http://200.91.192.68:8088",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

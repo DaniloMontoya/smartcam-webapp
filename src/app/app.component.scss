@@ -1,0 +1,45 @@
+mat-sidenav-container {
+    height: 100%;
+    mat-sidenav {
+        mat-nav-list {
+            .chevron-button.rotated {
+                transition: 300ms ease-in-out;
+                transform: rotate(0deg);
+                right: 0;
+                float: right;
+                position: absolute;
+            }
+        }
+    }
+}
+
+.end {
+    width: 81%;
+    position: absolute;
+    bottom: 0;
+    margin: 25px 25px 25px 25px;
+    font-size: 13px;
+}
+
+.footer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toEndNav {
+    right: 0;
+    margin-right: 10px;
+    position: absolute;
+    color: antiquewhite;
+    img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+    }
+}
+
+.example-button-row {
+    display: table-cell;
+    width: 490px;
+}
