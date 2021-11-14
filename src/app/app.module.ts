@@ -19,6 +19,7 @@ import { StreamingComponent } from './components/streaming/streaming.component';
 import { AlertNotificationsComponent } from './components/alert-notifications/alert-notifications.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { ConfirmDialog } from './shared/confirm-dialog.component';
+import { AlertConfigComponent } from './components/alert-config/alert-config.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ConfirmDialog } from './shared/confirm-dialog.component';
     StreamingComponent,
     AlertNotificationsComponent,
     TranslatePipe,
+    AlertConfigComponent,
   ],
   imports: [
     FormsModule,

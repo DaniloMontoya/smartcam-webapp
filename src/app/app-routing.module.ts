@@ -6,6 +6,7 @@ import { SpeedAlertComponent } from './components/speed-alert/speed-alert.compon
 import { SosAlertComponent } from './components/sos-alert/sos-alert.component';
 import { StatsComponent } from './components/stats/stats.component'
 import { StreamingComponent } from './components/streaming/streaming.component';
+import { AlertConfigComponent } from './components/alert-config/alert-config.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'stats/:id', component: StatsComponent },
   { path: 'streaming', component: StreamingComponent },
   { path: 'streaming/:id', component: StreamingComponent },
+  { path: 'alert-config', component: AlertConfigComponent}
 ];
 
 @NgModule({

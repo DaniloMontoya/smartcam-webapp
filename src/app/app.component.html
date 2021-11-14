@@ -8,7 +8,7 @@
             <mat-divider></mat-divider>
             <mat-list-item *ngFor="let nav of navigations" [routerLink]="nav.route">
                 <mat-icon color="primary" mat-list-icon>{{nav.icon}}</mat-icon>
-                <span *ngIf="isExpanded" style="width: 210px;">{{nav.name}}</span>
+                <span *ngIf="isExpanded" class="subtitle" style="width: 210px;">{{nav.name}}</span>
             </mat-list-item>
             <label class="end" *ngIf="isExpanded"><i>Designed by <b>Dev-Codes S.A.S</b> © 2021</i></label>
             <!--button (click)="auth.logout()" *ngIf="isExpanded" mat-flat-button class="exit-button" color="primary">Cerrar Sesión</button-->
