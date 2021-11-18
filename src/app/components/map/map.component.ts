@@ -273,14 +273,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private makeCursorToDrag() {
     this.map.on("pointermove", (evt) => {
-      var hit = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
-          return true;
-      });
-      if (hit) {
-          this.map.getTargetElement().style.cursor = 'pointer';
-      } else {
-          this.map.getTargetElement().style.cursor = '';
-      }
+      var hit = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => { return true; });
+      this.map.getTargetElement().style.cursor = hit ? 'pointer' : ''
   });
     /**
     this.map.getViewport().style.cursor = "-webkit-grab";

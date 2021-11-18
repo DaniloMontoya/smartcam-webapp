@@ -2,58 +2,35 @@
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
         <div class="col-sm">
-            <div class="streaming"></div>
+            <canvas #streaming id="canvas" height="720" width="1280" class="streaming"></canvas>
         </div>
-        <div class="col-sm-3">
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
-            <div class="cameras">
-                <img style="float: left;" src="https://i.insider.com/5b0d4c731ae6622f008b4f81?width=700" alt="">
-                <div style="float: left; margin: 16px 10px">
-                    <h5><b>Título</b></h5>
-                    <p>Subtítulo</p>
-                </div>
-            </div>
+        <div class="col-sm">
+            <div id="map" class="map"></div>
         </div>
     </div>
+    <!--table mat-table [dataSource]="alerts" style="margin-top: 10px;">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehiculo">
+            <th mat-header-cell *matHeaderCellDef> Vehículo </th>
+            <td mat-cell *matCellDef="let element"> {{element.licensePlate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="camara">
+            <th mat-header-cell *matHeaderCellDef> Cámara </th>
+            <td mat-cell *matCellDef="let element"> {{element.typeVehicle | translate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="placa">
+            <th mat-header-cell *matHeaderCellDef> Placa </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table-->
 </div>

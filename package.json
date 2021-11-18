@@ -24,6 +24,7 @@
         "@angular/platform-browser": "^12.2.9",
         "@angular/platform-browser-dynamic": "^12.2.9",
         "@angular/router": "^12.2.9",
+        "@cycjimmy/jsmpeg-player": "^5.0.1",
         "@fortawesome/fontawesome-free": "^5.15.4",
         "@material-extended/mde": "^3.0.3",
         "@popperjs/core": "^2.10.2",

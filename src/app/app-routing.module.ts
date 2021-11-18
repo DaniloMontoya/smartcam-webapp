@@ -17,7 +17,6 @@ const routes: Routes = [
   { path: 'speed-alert', component: SpeedAlertComponent },
   { path: 'sos-alert', component: SosAlertComponent },
   { path: 'stats/:id', component: StatsComponent },
-  { path: 'streaming', component: StreamingComponent },
   { path: 'streaming/:id', component: StreamingComponent },
   { path: 'alert-config', component: AlertConfigComponent}
 ];

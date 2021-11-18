@@ -27,7 +27,10 @@ export class NotifierService {
 
   clickAlert(imei:string) {
     this.deleteAlert(imei)
-    this.router.navigate([`/map/${imei}`])
+    if(this.router.url == '/map')
+      this.router.navigate([`/map/${imei}`]).then(()=>{location.reload()})
+    else
+      this.router.navigate([`/map/${imei}`])
   }
 
   deleteAlert(imei:string) {
