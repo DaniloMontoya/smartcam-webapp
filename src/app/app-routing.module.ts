@@ -7,6 +7,7 @@ import { SosAlertComponent } from './components/sos-alert/sos-alert.component';
 import { StatsComponent } from './components/stats/stats.component'
 import { StreamingComponent } from './components/streaming/streaming.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
+import { CamerasComponent } from './components/cameras/cameras.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'sos-alert', component: SosAlertComponent },
   { path: 'stats/:id', component: StatsComponent },
   { path: 'streaming/:id', component: StreamingComponent },
-  { path: 'alert-config', component: AlertConfigComponent}
+  { path: 'alert-config', component: AlertConfigComponent },
+  { path: 'cameras', component: CamerasComponent }
 ];
 
 @NgModule({

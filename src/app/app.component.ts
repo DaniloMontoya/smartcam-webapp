@@ -12,12 +12,13 @@ export class AppComponent {
   isExpanded = false;
 
   navigations = [
-    {icon: 'location_on', name: 'Mapa', route: 'map'},
+    {icon: 'location_on', name: 'Mapa', route: '/map'},
     {icon: 'video_library', name: 'Grabaciones', route: 'playback'},
+    {icon: 'subscriptions', name: 'Cámaras disponibles', route: '/cameras'},
     {icon: 'edit_road', name: 'Edición', route: '/edit'},
     {icon: 'taxi_alert', name: 'Alertas de velocidad', route: '/speed-alert'},
     {icon: 'support', name: 'Alertas S.O.S', route: '/sos-alert'},
-    {icon: 'settings', name: 'Edición de alertas', route: '/alert-config'}]
+    {icon: 'settings', name: 'Control de alertas', route: '/alert-config'}]
 
   constructor(public auth: AuthService) {}
 }

@@ -20,6 +20,7 @@ import { AlertNotificationsComponent } from './components/alert-notifications/al
 import { TranslatePipe } from './pipes/translate.pipe';
 import { ConfirmDialog } from './shared/confirm-dialog.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
+import { CamerasComponent } from './components/cameras/cameras.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AlertConfigComponent } from './components/alert-config/alert-config.com
     AlertNotificationsComponent,
     TranslatePipe,
     AlertConfigComponent,
+    CamerasComponent,
   ],
   imports: [
     FormsModule,

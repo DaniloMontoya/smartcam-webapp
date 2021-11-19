@@ -27,15 +27,19 @@ export class NotifierService {
 
   clickAlert(imei:string) {
     this.deleteAlert(imei)
-    if(this.router.url == '/map')
-      this.router.navigate([`/map/${imei}`]).then(()=>{location.reload()})
-    else
-      this.router.navigate([`/map/${imei}`])
+    if(this.router.url.includes('/map'))
+      return this.reloadMapView(imei)
+    this.router.navigate([`/map/${imei}`])
   }
 
   deleteAlert(imei:string) {
     let index = this.notifications.findIndex((notification:any) => notification.imei === imei)
     this.notifications.splice(index,1)
+  }
+
+  reloadMapView(imei:string) {
+    if(!this.router.url.includes(imei))
+      this.router.navigate([`/map/${imei}`]).then(()=>{location.reload()})
   }
 
 }
