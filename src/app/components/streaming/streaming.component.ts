@@ -38,19 +38,11 @@ export class StreamingComponent implements OnInit {
   public GPSData: Array<DeviceGps> = []
   public pathData: Array<LatLon> = []
   public selectedDevice: DeviceGps
-  public popDevice: DeviceGps
   public minimize_carlist: boolean = false
   public path_is_drawn: boolean = false
   public id
 
-  public alerts = true
-
-  public length = 100;
-  public pageSize = 15;
-  public pageIndex = 0;
-  public pageSizeOptions: number[] = [15, 30, 50, 100];
-
-  displayedColumns: string[] = ['id', 'vehiculo', 'camara', 'placa'];
+  public displayedColumns: string[] = ['imei', 'vehiculo', 'camara', 'placa'];
 
   constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
 
@@ -291,10 +283,6 @@ export class StreamingComponent implements OnInit {
 
     marker.setStyle(icon);
     return marker;
-  }
-
-  loadNextPage(event) {
-    console.log(event)
   }
 
 }
