@@ -42,7 +42,7 @@
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "node_modules/@fortawesome/fontawesome-free/js/all.js"
+                            "node_modules/flv.js/dist/flv.min.js"
                         ]
                     },
                     "configurations": {
@@ -114,7 +114,7 @@
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "node_modules/@fortawesome/fontawesome-free/js/all.js"
+                            "node_modules/flv.js/dist/flv.min.js"
                         ]
                     }
                 },

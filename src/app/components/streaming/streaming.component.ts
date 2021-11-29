@@ -17,7 +17,9 @@ import { LatLon } from 'src/app/models/latlon.model';
 import { RestService } from 'src/app/services/rest.service';
 import { DEFAULT_ANCHOR, DEFAULT_ICON_PATH } from '../map/map.component';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
-import JSMpeg from '@cycjimmy/jsmpeg-player';
+import { Streaming } from 'src/app/models/streaming.model';
+import FlvJs from 'flv.js';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-streaming',
@@ -26,9 +28,11 @@ import JSMpeg from '@cycjimmy/jsmpeg-player';
 })
 export class StreamingComponent implements OnInit {
 
-  @ViewChild('streaming', {static: true}) streamingcanvas: ElementRef
+  public streamStatus: Streaming
+  public urlStreaming: SafeUrl
+  //public frontstream: FlvJs.Player
+  //public backstream: FlvJs.Player
 
-  public isChangedBlock = {};
   public anchor: number[] = DEFAULT_ANCHOR
   public map: Map;
   public search: string
@@ -42,21 +46,22 @@ export class StreamingComponent implements OnInit {
   public path_is_drawn: boolean = false
   public id
 
-  public displayedColumns: string[] = ['imei', 'vehiculo', 'camara', 'placa'];
+  public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
-  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
+  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService, public sanitizier: DomSanitizer) { }
 
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
-    this.map = this.createOpenLayerMap();
+    this.map = this.createOpenLayerMap()
     this.makeCursorToDrag()
-    this.loadGPSData();
+    this.loadGPSData()
     this.initWebsocket()
-    new JSMpeg.VideoElement('#canvas', 'ws://localhost:9999', {canvas: this.streamingcanvas.nativeElement , autoplay: true, loop: true})
   }
 
   ngOnDestroy() {
     this.stompClient.disconnect()
+    //this.frontstream.destroy()
+    //this.backstream.destroy()
   }
 
   initWebsocket(){
@@ -74,7 +79,7 @@ export class StreamingComponent implements OnInit {
 
   private _subcribeTopic(topic: string) {
     if(!this.stompClient){
-      console.error("Error to configure mailbot websocket");
+      console.error("Error to configure websocket");
       return;
     }
     this.stompClient.subscribe(topic, (message:any) => {
@@ -156,8 +161,36 @@ export class StreamingComponent implements OnInit {
 
   public centerViewToDevice(device: DeviceGps) {
     this.selectedDevice = device
-    this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]));
-    this.map.getView().setZoom(16);
+    this.urlStreaming = this.sanitizier.bypassSecurityTrustResourceUrl(`http://200.91.192.68:8090/video.html?imei=${device.imeiCamera}`)
+    this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]))
+    this.map.getView().setZoom(16)
+    this.rest.askStreamingCamera(device.imeiCamera).subscribe((response:Streaming)=>{
+      this.streamStatus = response
+      //this.frontstream = this.loadStreamFromUrl('frontstream', this.streamStatus.urlStreamFront)
+      //this.backstream = this.loadStreamFromUrl('backstream', this.streamStatus.urlStreamBack)
+    })
+  }
+  loadStreamFromUrl(elementID:string, streamURL: string) {
+    if(FlvJs.isSupported()) {
+      try {
+        let VIDEO_ELEMENT = <HTMLMediaElement> document.getElementById(elementID);
+        VIDEO_ELEMENT.muted = true
+        const FLV_PLAYER = FlvJs.createPlayer({
+          type: 'flv',
+          url: `streaming${streamURL}`,
+          isLive: true,
+          cors: false
+        });
+        FLV_PLAYER.attachMediaElement(VIDEO_ELEMENT);
+        FLV_PLAYER.load();
+        FLV_PLAYER.play();
+        FLV_PLAYER.muted = true
+        return FLV_PLAYER
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
   }
 
   public removePath() {

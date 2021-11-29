@@ -61,4 +61,16 @@ export class RestService {
     return this.http.get(`rest/v1/gps/speedAlerts/${page}/${size}/${licensePlate}`)
   }
 
+  listAllCameras() {
+    return this.http.get(`rest/cameras/v1/all`)
+  }
+
+  cameraToVehicle(imeiCamera:string, imeiVehicle:string) {
+    return this.http.put(`/rest/v1/gps/add/camera/${imeiCamera}/to/vehicle/${imeiVehicle}`, {})
+  }
+
+  askStreamingCamera(imeiCamera:string) {
+    return this.http.get(`/rest/cameras/v1/isLive/${imeiCamera}`)
+  }
+
 }

@@ -2,14 +2,21 @@
     width: 1280px;
     height: 720px;
     border-radius: 8px;
+    background-color: black;
 }
 
 .map {
-    height: 720px;
+    height: 360px;
+    max-height: 720px;
     min-height: 200px;
-    width: 480px;
+    width: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px;
+}
+
+.center {
+    height: 50%;
+    text-align: center;
 }

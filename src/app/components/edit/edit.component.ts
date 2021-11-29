@@ -38,6 +38,7 @@ export class EditComponent implements OnInit {
   updateDevice(device:DeviceGps) {
     this.rest.doUpdateVehicle(device).subscribe((response)=>{
       if(response) {
+        this.rest.cameraToVehicle(device.imeiCamera, device.imei).subscribe()
         this._snackBar.open(`El dispositivo de ${device.vehicle} ${device.imei}, ha sido actualizado!`)
         setTimeout(() => {
           this._snackBar.dismiss()

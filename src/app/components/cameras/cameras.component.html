@@ -1,62 +1,30 @@
 <h1 class="title">Cámaras Disponibles</h1>
-<div class="container" style="margin-top: 10px;">
-    <!--mat-spinner [hidden]="speed_alerts !== undefined" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
+<div class="container" style="margin-top: 16px;">
+    <mat-spinner [hidden]="camera_list !== undefined" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
 
-  <mat-form-field *ngIf="speed_alerts" appearance="standard" style="width: 100%; margin-bottom: 25px;">
-      <mat-label>Buscar vehiculos</mat-label>
-      <input matInput placeholder="ABC123..." [(ngModel)]="search" (keydown.enter)="SearchPlate()">
-      <mat-icon matSuffix>search</mat-icon>
-      <mat-hint>Placa</mat-hint>
-  </mat-form-field>
+    <table mat-table [dataSource]="camera_list" class="mat-elevation-z8" *ngIf="camera_list">
 
-  <div class="mat-elevation-z8" *ngIf="speed_alerts">
-      <table mat-table [dataSource]="speed_alerts?.content | filter:search">
+        <ng-container matColumnDef="imei">
+            <th mat-header-cell *matHeaderCellDef> Imei </th>
+            <td mat-cell *matCellDef="let element"> {{element.imei}} </td>
+        </ng-container>
 
-          <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef> ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
+        <ng-container matColumnDef="customer">
+            <th mat-header-cell *matHeaderCellDef> Cliente </th>
+            <td mat-cell *matCellDef="let element"> {{element.customer | titlecase}} </td>
+        </ng-container>
 
-          <ng-container matColumnDef="licensePlate">
-              <th mat-header-cell *matHeaderCellDef> Placa </th>
-              <td mat-cell *matCellDef="let element"> {{element.licensePlate}} </td>
-          </ng-container>
+        <ng-container matColumnDef="lastStatus">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastStatus | translate}} </td>
+        </ng-container>
 
-          <ng-container matColumnDef="vehicle">
-              <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
-              <td mat-cell *matCellDef="let element"> {{element.vehicle | translate}} </td>
-          </ng-container>
+        <ng-container matColumnDef="lastUpdated">
+            <th mat-header-cell *matHeaderCellDef> Última Actualización </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastUpdated | date:'medium'}} </td>
+        </ng-container>
 
-          <ng-container matColumnDef="exceeded">
-              <th mat-header-cell *matHeaderCellDef> Exceso </th>
-              <td mat-cell *matCellDef="let element"> {{element.exceeded | number}}km/h </td>
-          </ng-container>
-
-          <ng-container matColumnDef="speed">
-              <th mat-header-cell *matHeaderCellDef> Velocidad </th>
-              <td mat-cell *matCellDef="let element"> {{element.speed | number}}km/h </td>
-          </ng-container>
-
-          <ng-container matColumnDef="maxSpeed">
-              <th mat-header-cell *matHeaderCellDef> Velocidad Máxima </th>
-              <td mat-cell *matCellDef="let element"> {{element.speed - element.exceeded | number}}km/h </td>
-          </ng-container>
-
-          <ng-container matColumnDef="created">
-              <th mat-header-cell *matHeaderCellDef> Fecha </th>
-              <td mat-cell *matCellDef="let element"> {{element.created | date:'medium'}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="location">
-              <th mat-header-cell *matHeaderCellDef> Ubicación </th>
-              <td mat-cell *matCellDef="let element"> <button [routerLink]="['/map',element.imei]" mat-button><mat-icon>location_on</mat-icon></button> </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator [hidden]="!speed_alerts" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="loadNextPage($event)" aria-label="Select page">
-      </mat-paginator>
-  </div-->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>

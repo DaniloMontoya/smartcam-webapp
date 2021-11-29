@@ -8,7 +8,7 @@
         <mat-icon matSuffix>search</mat-icon>
         <mat-hint>Placa</mat-hint>
     </mat-form-field>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8" *ngIf="GPSData">
         <mat-accordion class="example-headers-align" multi>
             <mat-expansion-panel *ngFor="let data of GPSData?.content | filter:search" [expanded]="data.imei === id">
                 <mat-expansion-panel-header>
@@ -28,6 +28,10 @@
                     <mat-label>Placa/Matricula</mat-label>
                     <input [(ngModel)]="data.licensePlate" matInput>
                 </mat-form-field>
+                <mat-form-field appearance="fill" style="margin-left: 10px;">
+                    <mat-label>Imei de cámara asociada</mat-label>
+                    <input [(ngModel)]="data.imeiCamera" matInput>
+                </mat-form-field>
                 <br>
                 <label>Tipo de vehiculo</label>
                 <mat-radio-group class="example-radio-group" aria-label="Select an option" [(ngModel)]="data.vehicle" style="margin-left: 10px;">
@@ -38,7 +42,7 @@
                         Moto
                     </mat-radio-button>
                 </mat-radio-group>
-                <label>Última actualización: {{data.lastUpdate | date}}</label>
+                <label>Última actualización: {{data.lastUpdate | date:'medium'}}</label>
                 <mat-action-row>
                     <button [hidden]="data.ignition === 'On'" mat-raised-button (click)="openUnlockDialog(data)">Desbloquear Vechiculo</button>
                     <button [hidden]="data.ignition === 'Off'" mat-raised-button (click)="openTurnOffDialog(data)">Apagar Vechiculo</button>

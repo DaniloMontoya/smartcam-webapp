@@ -7,9 +7,13 @@ export class TranslatePipe implements PipeTransform {
     transform(value: any): any {
         switch (value) {
           case 'BIKE':
-              return 'Motocicleta'
-            case 'CAR':
-              return 'Carro'
+            return 'Motocicleta'
+          case 'CAR':
+            return 'Carro'
+          case 'ACTIVE':
+            return 'Activo'
+          case 'INACTIVE':
+            return 'Inactivo'
         }
     }
 }

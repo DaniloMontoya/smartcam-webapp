@@ -98,6 +98,8 @@ export class MapComponent implements OnInit, OnDestroy {
         data.licensePlate = response.licensePlate
         data.longitude = response.longitude
         data.spd = response.spd
+        data.cameraStatus = response.cameraStatus
+        data.imeiCamera = response.imeiCamera
 
         this.showAlertVehicle(response, data.imei)
 
