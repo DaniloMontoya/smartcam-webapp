@@ -20,7 +20,8 @@ import { AlertNotificationsComponent } from './components/alert-notifications/al
 import { TranslatePipe } from './pipes/translate.pipe';
 import { ConfirmDialog } from './shared/confirm-dialog.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
-import { CamerasComponent } from './components/cameras/cameras.component';
+import { CamerasComponent, StreamModal } from './components/cameras/cameras.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,11 @@ import { CamerasComponent } from './components/cameras/cameras.component';
     SosAlertComponent,
     ConfirmDialog,
     StatsComponent,
+    StreamModal,
     StreamingComponent,
     AlertNotificationsComponent,
     TranslatePipe,
+    SafePipe,
     AlertConfigComponent,
     CamerasComponent,
   ],

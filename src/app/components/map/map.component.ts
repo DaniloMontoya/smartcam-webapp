@@ -152,6 +152,10 @@ export class MapComponent implements OnInit, OnDestroy {
     this.path_is_drawn = false
   }
 
+  public removeMarks() {
+    this.removeLayers("gpsMarks")
+  }
+
   public loadPathData(pathId){
     this.removePath()
     this.rest.listAllPositionByRoute(pathId).subscribe((response:Array<LatLon>) => {
@@ -187,9 +191,19 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   public centerViewToDevice(device: DeviceGps) {
+    this.removeMarks()
+    this.GPSMarks = this.createGPSMarkers([device]);
+    this.addMarksInMap(this.GPSMarks, 'gpsMarks');
     this.selectedDevice = device
     this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]));
     this.map.getView().setZoom(16);
+  }
+
+  public removeSelected() {
+    this.removeMarks()
+    this.selectedDevice=null
+    this.GPSMarks = this.createGPSMarkers(this.GPSData);
+    this.addMarksInMap(this.GPSMarks, 'gpsMarks');
   }
 
   private createGPSMarkers(GPSData:Array<DeviceGps>):Array<Feature<any>> {

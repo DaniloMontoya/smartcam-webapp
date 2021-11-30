@@ -19,7 +19,6 @@ import { DEFAULT_ANCHOR, DEFAULT_ICON_PATH } from '../map/map.component';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 import { Streaming } from 'src/app/models/streaming.model';
 import FlvJs from 'flv.js';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-streaming',
@@ -29,9 +28,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class StreamingComponent implements OnInit {
 
   public streamStatus: Streaming
-  public urlStreaming: SafeUrl
-  //public frontstream: FlvJs.Player
-  //public backstream: FlvJs.Player
+  public urlStreaming: string
 
   public anchor: number[] = DEFAULT_ANCHOR
   public map: Map;
@@ -48,7 +45,7 @@ export class StreamingComponent implements OnInit {
 
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
-  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService, public sanitizier: DomSanitizer) { }
+  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
 
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
@@ -60,8 +57,6 @@ export class StreamingComponent implements OnInit {
 
   ngOnDestroy() {
     this.stompClient.disconnect()
-    //this.frontstream.destroy()
-    //this.backstream.destroy()
   }
 
   initWebsocket(){
@@ -127,14 +122,13 @@ export class StreamingComponent implements OnInit {
     this.rest.listAll().subscribe((response:Array<DeviceGps>) => {
       this.GPSData = response
       if(this.GPSData) {
-        this.GPSMarks = this.createGPSMarkers(this.GPSData);
-        this.addMarksInMap(this.GPSMarks, 'gpsMarks');
-        if(this.id) {
-          this.GPSData.forEach((data) => {
-            if(this.id === data.imei)
-              this.centerViewToDevice(data)
-          })
-        }
+        this.GPSData.forEach((data) => {
+          if(this.id === data.imei) {
+            this.GPSMarks = this.createGPSMarkers([data]);
+            this.addMarksInMap(this.GPSMarks, 'gpsMarks');
+            this.centerViewToDevice(data)
+          }
+        })
       }
     }, error => console.error(error));
   }
@@ -161,13 +155,11 @@ export class StreamingComponent implements OnInit {
 
   public centerViewToDevice(device: DeviceGps) {
     this.selectedDevice = device
-    this.urlStreaming = this.sanitizier.bypassSecurityTrustResourceUrl(`http://200.91.192.68:8090/video.html?imei=${device.imeiCamera}`)
     this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]))
     this.map.getView().setZoom(16)
     this.rest.askStreamingCamera(device.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
-      //this.frontstream = this.loadStreamFromUrl('frontstream', this.streamStatus.urlStreamFront)
-      //this.backstream = this.loadStreamFromUrl('backstream', this.streamStatus.urlStreamBack)
+      this.urlStreaming = `http://200.91.192.68:8090/video.html?imei=${device.imeiCamera}`
     })
   }
   loadStreamFromUrl(elementID:string, streamURL: string) {

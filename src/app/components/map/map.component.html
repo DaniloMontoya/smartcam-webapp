@@ -14,7 +14,7 @@
             <mat-hint>Placa</mat-hint>
         </mat-form-field>
         <mat-chip-list>
-            <mat-chip *ngIf="selectedDevice" [removable]="true" (removed)="selectedDevice=null">
+            <mat-chip *ngIf="selectedDevice" [removable]="true" (removed)="removeSelected()">
                 <mat-icon color="primary" matSuffix>push_pin</mat-icon>
                 {{selectedDevice.licensePlate}}
                 <mat-icon matChipRemove>cancel</mat-icon>

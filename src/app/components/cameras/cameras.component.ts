@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -9,15 +10,29 @@ import { RestService } from 'src/app/services/rest.service';
 export class CamerasComponent implements OnInit {
 
   camera_list: any;
-  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'lastUpdated'];
+  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'lastUpdated', 'livestream'];
 
-  constructor(private rest: RestService) { }
+  constructor(private rest: RestService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.rest.listAllCameras().subscribe((response)=>{
       this.camera_list = response
-      console.log(response)
     }), error => console.error(error)
   }
 
+  openStream(imei_camera:string) {
+    this.dialog.open(StreamModal, {
+      data: {imei:imei_camera}
+    });
+  }
+
+}
+
+@Component({
+  selector: 'steam-modal',
+  templateUrl: 'stream.modal.html',
+})
+export class StreamModal {
+  url:string
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {this.url = `http://200.91.192.68:8090/video.html?imei=${data.imei}`}
 }

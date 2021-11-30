@@ -43,12 +43,16 @@ export class StatsComponent implements OnInit {
 
   barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false
   }
   barChartType: ChartType = 'bar'
   barChartLegend = true
   barChartData: ChartDataSets[] = []
   barChartLabels: Label[] = []
   barChartPlugins = [];
+
+  displayedColumns: string[] = ['date', 'distance'];
+  reportList: any
 
   constructor(private _Activatedroute:ActivatedRoute, private rest:RestService) { }
 
@@ -62,6 +66,7 @@ export class StatsComponent implements OnInit {
   }
 
   setGraph(response:any) {
+    this.reportList = response.report
     if(this.dateReportList.length>0) {
       this.dateReportList = []
       this.distanceInKmList = []

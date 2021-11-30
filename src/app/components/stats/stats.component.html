@@ -1,6 +1,6 @@
 <h1 class="title">Reportes de Estadísticas</h1>
-<div class="container">
-    <mat-card style="height: 90%;">
+<div class="container-fluid">
+    <mat-card>
         <mat-card-title>
             <mat-icon [hidden]="vehicle === 'CAR'" class="mat-18">two_wheeler</mat-icon>
             <mat-icon [hidden]="vehicle !== 'CAR'" class="mat-18">directions_car</mat-icon>
@@ -28,16 +28,34 @@
         </mat-form-field>
         <br>
         <div class="row" *ngIf="barChartData.length>0">
-            <div class="col-1" style="position: relative; top: 29vh;">
+            <div class="col-1" style="position: relative; top: 28vh;">
                 Km
             </div>
             <div class="col-11">
                 <div class="chart-wrapper">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="chartColors" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-                    </canvas>
+                    <div style="width: 91%; height: 525px;">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="chartColors" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+                      </canvas>
+                    </div>
                     <p style="text-align: center; margin-top: 10px;">Día(s)</p>
                 </div>
             </div>
         </div>
     </mat-card>
+
+    <table mat-table [dataSource]="reportList" style="margin-top: 16px; padding: 16px;">
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateReport | date:'medium'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="distance">
+            <th mat-header-cell *matHeaderCellDef> Distancia Recorrida </th>
+            <td mat-cell *matCellDef="let element"> {{element.distanceInKm | number}} kilometros </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
 </div>

@@ -1,5 +1,4 @@
 .map-container {
-    padding: 0.5rem;
     background-color: white;
 }
 
@@ -21,7 +20,7 @@
     border: 1px solid #cccccc;
     bottom: 12px;
     left: -50px;
-    min-width: 306px;
+    min-width: 256px;
     text-align: left;
 }
 
@@ -95,7 +94,7 @@ body::-webkit-scrollbar-thumb:active {
 
 .small_mat_button {
     button {
-        width: 50px!important;
+        width: 40px!important;
         min-width: unset!important;
     }
 }
