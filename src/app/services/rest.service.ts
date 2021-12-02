@@ -22,7 +22,7 @@ export class RestService {
   }
 
   listAllPositionByRoute(idRoute) {
-    return this.http.get(`/rest/v1/gps/routes/tracks/${idRoute}`)
+    return this.http.get(`rest/v1/gps/routes/tracks/${idRoute}`)
   }
 
   listAllSosAlert(page, size) {
@@ -66,11 +66,15 @@ export class RestService {
   }
 
   cameraToVehicle(imeiCamera:string, imeiVehicle:string) {
-    return this.http.put(`/rest/v1/gps/add/camera/${imeiCamera}/to/vehicle/${imeiVehicle}`, {})
+    return this.http.put(`rest/v1/gps/add/camera/${imeiCamera}/to/vehicle/${imeiVehicle}`, {})
   }
 
   askStreamingCamera(imeiCamera:string) {
-    return this.http.get(`/rest/cameras/v1/isLive/${imeiCamera}`)
+    return this.http.get(`rest/cameras/v1/isLive/${imeiCamera}`)
+  }
+
+  listRouteByGps(imei:string) {
+    return this.http.get(`rest/v1/gps/routes/${imei}`)
   }
 
 }

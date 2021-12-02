@@ -13,7 +13,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditComponent } from './components/edit/edit.component';
 import { SpeedAlertComponent } from './components/speed-alert/speed-alert.component';
 import { SosAlertComponent } from './components/sos-alert/sos-alert.component';
-import { StatsComponent } from './components/stats/stats.component';
+import { RoutesModal, StatsComponent } from './components/stats/stats.component';
 import { ChartsModule } from 'ng2-charts';
 import { StreamingComponent } from './components/streaming/streaming.component';
 import { AlertNotificationsComponent } from './components/alert-notifications/alert-notifications.component';
@@ -40,6 +40,7 @@ import { SafePipe } from './pipes/safe.pipe';
     SafePipe,
     AlertConfigComponent,
     CamerasComponent,
+    RoutesModal
   ],
   imports: [
     FormsModule,

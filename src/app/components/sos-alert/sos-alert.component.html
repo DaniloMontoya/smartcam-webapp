@@ -46,7 +46,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [hidden]="!sos_alerts" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="loadNextPage($event)" aria-label="Select page">
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="loadNextPage($event)" aria-label="Select page">
         </mat-paginator>
     </div>
 
