@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Map, View } from 'ol';
@@ -16,9 +16,9 @@ import { DeviceGps } from 'src/app/models/devicegps.model';
 import { LatLon } from 'src/app/models/latlon.model';
 import { RestService } from 'src/app/services/rest.service';
 import { DEFAULT_ANCHOR, DEFAULT_ICON_PATH } from '../map/map.component';
-import { DOMAIN_URL } from 'src/environments/domain.prod';
 import { Streaming } from 'src/app/models/streaming.model';
 import FlvJs from 'flv.js';
+import { DOMAIN_URL } from 'src/environments/domain.prod';
 
 @Component({
   selector: 'app-streaming',
@@ -40,7 +40,6 @@ export class StreamingComponent implements OnInit {
   public pathData: Array<LatLon> = []
   public selectedDevice: DeviceGps
   public minimize_carlist: boolean = false
-  public path_is_drawn: boolean = false
   public id
 
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
@@ -60,7 +59,7 @@ export class StreamingComponent implements OnInit {
   }
 
   initWebsocket(){
-    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
+    let ws:WebSocket = new SockJS(`/gps-websocket`);
     this.stompClient = Stomp.over(ws);
     const that = this;
     this.stompClient.connect({}, (frame:any) => {
@@ -88,6 +87,7 @@ export class StreamingComponent implements OnInit {
   private _updateWebSocketResponse (response:any) {
     this.GPSData.forEach((data)=>{
       if(data.imei === response.id) {
+        let lastIgnition = data.ignition
         data.alert = response.alert
         data.crs = response.crs
         data.imei = response.id
@@ -96,24 +96,15 @@ export class StreamingComponent implements OnInit {
         data.licensePlate = response.licensePlate
         data.longitude = response.longitude
         data.spd = response.spd
+        this.centerViewToDevice(data)
 
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
-            mark.setStyle(this.setVehicleIcon(data))
+            if(lastIgnition !== data.ignition) mark.setStyle(this.setVehicleIcon(data))
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
-            if(this.selectedDevice && data.imei === this.selectedDevice.imei)
-              this.centerViewToDevice(this.selectedDevice)
           }
         })
-
-        if(this.path_is_drawn) {
-          this.pathMarks.forEach((mark)=>{
-            let mark_id = mark.get("name")
-            if(mark_id === data.activeIdRoute)
-              this.addPathToData(mark_id, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
-          })
-        }
       }
     })
   }
@@ -133,62 +124,14 @@ export class StreamingComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  public addPathToData(pathId, point: LatLon){
-    this.removePath()
-    this.pathData.push(point)
-    this.pathMarks = this.createPathMarkers(this.pathData, pathId);
-    this.addMarksInMap(this.pathMarks, 'pathMarks');
-    this.path_is_drawn = true
-  }
-
-  private removeLayers(className:string) {
-    let layersToRemove = [];
-    this.map.getLayers().forEach((layer) => {
-      if(layer['className_'] != undefined && layer['className_'] === className)
-        layersToRemove.push(layer);
-    });
-    let len = layersToRemove.length;
-    for(let i = 0; i < len; i++) {
-      this.map.removeLayer(layersToRemove[i]);
-    }
-  }
-
   public centerViewToDevice(device: DeviceGps) {
     this.selectedDevice = device
     this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]))
     this.map.getView().setZoom(16)
-    this.rest.askStreamingCamera(device.imeiCamera).subscribe((response:Streaming)=>{
+    this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
-      this.urlStreaming = `http://200.91.192.68:8090/video.html?imei=${device.imeiCamera}`
+      this.urlStreaming = `http://${location.hostname}/video.html?imei=${device.imeiCamera}`
     })
-  }
-  loadStreamFromUrl(elementID:string, streamURL: string) {
-    if(FlvJs.isSupported()) {
-      try {
-        let VIDEO_ELEMENT = <HTMLMediaElement> document.getElementById(elementID);
-        VIDEO_ELEMENT.muted = true
-        const FLV_PLAYER = FlvJs.createPlayer({
-          type: 'flv',
-          url: `streaming${streamURL}`,
-          isLive: true,
-          cors: false
-        });
-        FLV_PLAYER.attachMediaElement(VIDEO_ELEMENT);
-        FLV_PLAYER.load();
-        FLV_PLAYER.play();
-        FLV_PLAYER.muted = true
-        return FLV_PLAYER
-      } catch (error) {
-        console.error(error)
-        return null
-      }
-    }
-  }
-
-  public removePath() {
-    this.removeLayers("line")
-    this.removeLayers("pathMarks")
-    this.path_is_drawn = false
   }
 
   private createGPSMarkers(GPSData:Array<DeviceGps>):Array<Feature<any>> {
@@ -200,18 +143,6 @@ export class StreamingComponent implements OnInit {
       GPSMarks.push(marker);
     }
     return GPSMarks;
-  }
-
-  private createPathMarkers(pathData:Array<LatLon>, pathId):Array<Feature<any>> {
-    let pathMarks:Array<Feature<any>> = [];
-    if(pathData){
-      for (let i = 0; i < pathData.length; i++) {
-        const pathPoint = pathData[i];
-        let marker = this.createPathMark(pathPoint, pathId);
-        pathMarks.push(marker);
-      }
-    }
-    return pathMarks;
   }
 
   private addMarksInMap(marks: Array<Feature<any>>, name:string){
@@ -235,7 +166,7 @@ export class StreamingComponent implements OnInit {
 
   private createOpenLayerMap(): Map {
     let openLayerMap: Map = new Map({
-      target: 'map',
+      target: 'minimap',
       layers:[
         new Tile({
           source: new OSM()
@@ -290,24 +221,4 @@ export class StreamingComponent implements OnInit {
     });
     return icon
   }
-
-  private createPathMark(path: LatLon, path_id): Feature<any>{
-    let icon_path = path.spd > 0 ? `${DEFAULT_ICON_PATH}track_move.svg` : `${DEFAULT_ICON_PATH}track_stopped.svg`
-
-    let marker = new Feature({
-      geometry: new Point(fromLonLat([path.longitude, path.latitude])),
-      name: path_id
-    });
-
-    let icon = new Style({
-      image: new Icon({
-        anchor: [0.25, 1],
-        src: icon_path
-      })
-    });
-
-    marker.setStyle(icon);
-    return marker;
-  }
-
 }

@@ -25,7 +25,6 @@ export class AlertConfigComponent implements OnInit {
   }
 
   loadNextPage(event) {
-    console.log(event)
   }
 
 }

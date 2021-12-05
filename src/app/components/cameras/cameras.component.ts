@@ -21,9 +21,7 @@ export class CamerasComponent implements OnInit {
   }
 
   openStream(imei_camera:string) {
-    this.dialog.open(StreamModal, {
-      data: {imei:imei_camera}
-    });
+    this.rest.askStreamingCamera(imei_camera).subscribe((response)=>{ this.dialog.open(StreamModal, { data: {imei:imei_camera, response:response} }); })
   }
 
 }
@@ -34,5 +32,7 @@ export class CamerasComponent implements OnInit {
 })
 export class StreamModal {
   url:string
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {this.url = `http://200.91.192.68:8090/video.html?imei=${data.imei}`}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.url = `http://${location.hostname}/video.html?imei=${data.imei}`
+  }
 }

@@ -1,6 +1,5 @@
-<h1 class="title">Edición de Vehículo</h1>
-
-<div class="container" style="margin-top: 10px">
+<h1 class="title">Lista de Vehículos</h1>
+<div class="container-fluid" style="margin-top: 10px">
     <mat-spinner [hidden]="GPSData !== undefined" color="primary" style="margin: auto"></mat-spinner>
     <mat-form-field *ngIf="GPSData?.content" appearance="standard" style="width: 100%; margin-bottom: 25px;">
         <mat-label>Buscar vehiculos</mat-label>
@@ -13,10 +12,10 @@
             <mat-expansion-panel *ngFor="let data of GPSData?.content | filter:search" [expanded]="data.imei === id">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{data.vehicle | translate}}
+                        {{data.licensePlate}}
                     </mat-panel-title>
                     <mat-panel-description>
-                        {{data.licensePlate}}
+                        {{data.vehicle | translate}} {{data.imei}}
                         <mat-icon>edit</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>

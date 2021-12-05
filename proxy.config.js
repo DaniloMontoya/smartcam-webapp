@@ -1,7 +1,6 @@
 const PROXY_CONFIG = {
     '/rest': {
-        target: 'http://200.91.192.68:8090',
-        //target: 'http://localhost:8091',
+        target: location.hostname,
         changeOrigin: true,
         secure: false,
         logLevel: 'debug'
