@@ -31,9 +31,9 @@
                     <button (click)="openStream(element.imei)" mat-button><mat-icon>visibility</mat-icon></button>
                 </div>
             </td>
-            <ng-container #notActive>
-                <button mat-button disabled><mat-icon>visibility</mat-icon></button>
-            </ng-container>
+            <ng-template #notActive>
+                <button mat-button disabled><mat-icon>visibility_off</mat-icon></button>
+            </ng-template>
 
         </ng-container>
 
