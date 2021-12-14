@@ -3,6 +3,7 @@
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
             <mat-list-item>
+                <span *ngIf="isExpanded" class="subtitle" style="width: 210px; font-size: 32px;"><b>Saferbo</b></span>
                 <mat-icon color="primary" (click)="isExpanded = !isExpanded" mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">menu</mat-icon>
             </mat-list-item>
             <mat-divider></mat-divider>
@@ -17,7 +18,15 @@
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <img src="../assets/moviint-logo-vector.svg" height="46" width="70">
-            <button class="toEndNav" mat-button [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger"><img src="../assets/saferbo.jpg"></button>
+            <div class="row toEndNav" style="line-height: 85%">
+                <div class="col-sm-6" style="font-size: 13px; margin-top: 7px;">
+                    <b>Peggie Sue</b>
+                    <br> p.sue@mail.com
+                </div>
+                <div class="col-sm-6">
+                    <button mat-button [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger"><img src="../assets/saferbo.jpg"></button>
+                </div>
+            </div>
         </mat-toolbar>
         <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
             <mat-card style="max-width: 230px">

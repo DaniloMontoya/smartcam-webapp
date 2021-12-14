@@ -10,7 +10,7 @@ import { RestService } from 'src/app/services/rest.service';
 export class CamerasComponent implements OnInit {
 
   camera_list: any;
-  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'lastUpdated', 'livestream'];
+  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'number', 'lastUpdated', 'livestream'];
 
   constructor(private rest: RestService, private dialog: MatDialog) { }
 

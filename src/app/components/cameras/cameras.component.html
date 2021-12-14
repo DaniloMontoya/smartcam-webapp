@@ -19,6 +19,11 @@
             <td mat-cell *matCellDef="let element"> {{element.lastStatus | translate}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef> Número </th>
+            <td mat-cell *matCellDef="let element"> {{element?.phoneNumber | translate}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="lastUpdated">
             <th mat-header-cell *matHeaderCellDef> Última Actualización </th>
             <td mat-cell *matCellDef="let element"> {{element.lastUpdated | date:'medium'}} </td>
