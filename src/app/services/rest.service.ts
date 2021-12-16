@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Client } from 'src/environments/client.prod';
 import { DeviceGps } from '../models/devicegps.model';
 
 @Injectable({
@@ -75,6 +76,14 @@ export class RestService {
 
   listRouteByGps(imei:string) {
     return this.http.get(`rest/v1/gps/routes/${imei}`)
+  }
+
+  getClient() {
+    return this.http.get('rest/client')
+  }
+
+  updateClient(client:Client) {
+    return this.http.put('rest/client', client)
   }
 
 }

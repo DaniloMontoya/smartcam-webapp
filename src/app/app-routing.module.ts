@@ -8,6 +8,7 @@ import { StatsComponent } from './components/stats/stats.component'
 import { StreamingComponent } from './components/streaming/streaming.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
 import { CamerasComponent } from './components/cameras/cameras.component';
+import { ConfigComponent } from './components/config/config.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'stats/:id', component: StatsComponent },
   { path: 'streaming/:id', component: StreamingComponent },
   { path: 'alert-config', component: AlertConfigComponent },
-  { path: 'cameras', component: CamerasComponent }
+  { path: 'cameras', component: CamerasComponent },
+  { path: 'config', component: ConfigComponent}
 ];
 
 @NgModule({

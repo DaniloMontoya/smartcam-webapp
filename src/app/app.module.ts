@@ -22,6 +22,7 @@ import { ConfirmDialog } from './shared/confirm-dialog.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
 import { CamerasComponent, StreamModal } from './components/cameras/cameras.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { ConfigComponent } from './components/config/config.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SafePipe } from './pipes/safe.pipe';
     SafePipe,
     AlertConfigComponent,
     CamerasComponent,
-    RoutesModal
+    RoutesModal,
+    ConfigComponent
   ],
   imports: [
     FormsModule,

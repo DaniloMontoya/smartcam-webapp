@@ -3,7 +3,7 @@
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
             <mat-list-item>
-                <span *ngIf="isExpanded" class="subtitle" style="width: 210px; font-size: 32px;"><b>Saferbo</b></span>
+                <span *ngIf="isExpanded" class="subtitle" style="width: 210px; font-size: 32px;"><b>{{client?.name | titlecase}}</b></span>
                 <mat-icon color="primary" (click)="isExpanded = !isExpanded" mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">menu</mat-icon>
             </mat-list-item>
             <mat-divider></mat-divider>
