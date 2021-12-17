@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RestService } from 'src/app/services/rest.service';
+import { DOMAIN_URL } from 'src/environments/domain.prod';
 
 @Component({
   selector: 'app-cameras',
@@ -10,7 +11,7 @@ import { RestService } from 'src/app/services/rest.service';
 export class CamerasComponent implements OnInit {
 
   camera_list: any;
-  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'number', 'lastUpdated', 'livestream'];
+  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'lastUpdated', 'livestream'];
 
   constructor(private rest: RestService, private dialog: MatDialog) { }
 
@@ -33,6 +34,6 @@ export class CamerasComponent implements OnInit {
 export class StreamModal {
   url:string
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.url = `http://${location.hostname}/video.html?imei=${data.imei}`
+    this.url = `http://${DOMAIN_URL}/video.html?imei=${data.imei}`
   }
 }
