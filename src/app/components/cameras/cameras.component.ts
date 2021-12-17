@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RestService } from 'src/app/services/rest.service';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 
@@ -22,7 +22,7 @@ export class CamerasComponent implements OnInit {
   }
 
   openStream(imei_camera:string) {
-    this.rest.askStreamingCamera(imei_camera).subscribe((response)=>{ this.dialog.open(StreamModal, { data: {imei:imei_camera, response:response} }); })
+    this.dialog.open(StreamModal, { data: {imei:imei_camera} });
   }
 
 }
@@ -33,7 +33,16 @@ export class CamerasComponent implements OnInit {
 })
 export class StreamModal {
   url:string
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.url = `http://${DOMAIN_URL}/video.html?imei=${data.imei}`
+  response:any
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService) {
+    this.rest.askStreamingCamera(data.imei).subscribe((res:any)=>{
+      this.response = res
+      if(res.isLive === false) {
+        setTimeout(() => {
+          this.dialogRef.close()
+        }, 5000);
+      }
+      this.url = `http://${DOMAIN_URL}/video.html?imei=${data.imei}`
+    });
   }
 }

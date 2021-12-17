@@ -1,4 +1,4 @@
-<iframe [src]="url | safe:'resourceUrl'" width="1280" height="369" *ngIf="data?.response?.isLive else loadingStream"></iframe>
+<iframe [src]="url | safe:'resourceUrl'" width="1280" height="369" *ngIf="response?.isLive else loadingStream"></iframe>
 <ng-template #loadingStream>
     <mat-spinner color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
 </ng-template>
