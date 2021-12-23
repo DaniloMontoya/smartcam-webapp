@@ -46,9 +46,8 @@
             <h6 id="longitude" class="text-muted"></h6>
             <h6 id="latitude" class="text-muted"></h6>
             <div class="small_mat_button">
-                <div *ngIf="popDevice?.imeiCamera else noimeicamera">
-                    <button [routerLink]="['/streaming',popDevice?.imei]" mat-button><mat-icon color="primary">videocam</mat-icon></button>
-                </div>
+                <button *ngIf="popDevice?.imeiCamera && popDevice?.cameraStatus === 'ACTIVE'" [routerLink]="['/streaming',popDevice?.imei]" mat-button><mat-icon color="primary">videocam</mat-icon></button>
+                <button *ngIf="!popDevice?.imeiCamera || popDevice?.cameraStatus !== 'ACTIVE'" mat-button disabled><mat-icon>videocam_off</mat-icon></button>
                 <button [hidden]="path_is_drawn" (click)="loadPathData(popDevice?.activeIdRoute)" mat-button>
                   <mat-icon color="primary">route</mat-icon>
                 </button>
@@ -65,7 +64,3 @@
 
     <!-- </div> -->
 </div>
-
-<ng-template #noimeicamera>
-    <button mat-button disabled><mat-icon>videocam_off</mat-icon></button>
-</ng-template>

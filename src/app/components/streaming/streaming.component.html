@@ -1,8 +1,11 @@
 <h1 class="title">Streaming de Cámaras</h1>
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
-        <div class="col-sm-8">
-            <iframe [src]="urlStreaming | safe:'resourceUrl'" class="streaming" *ngIf="streamStatus else loadingStream"></iframe>
+        <div [class]="streaming_col_css">
+            <div class="streaming">
+                <iframe [src]="urlStreaming | safe:'resourceUrl'" *ngIf="streamStatus else loadingStream"></iframe>
+                <button [hidden]="!streamStatus" mat-button (click)="goFullScreen()"><mat-icon>{{streaming_icon}}</mat-icon></button>
+            </div>
 
             <ng-template #loadingStream>
                 <mat-spinner color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
@@ -46,4 +49,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
 </div>

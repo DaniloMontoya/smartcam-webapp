@@ -19,7 +19,6 @@ import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DOMAIN_URL } from 'src/environments/domain.prod';
 
 export const DEFAULT_ANCHOR = [0.5, 1];
 export const DEFAULT_ICON_PATH = '../../../assets/';
@@ -129,6 +128,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.rest.listAll().subscribe((response:Array<DeviceGps>) => {
       this.GPSData = response
       if(this.GPSData) {
+        //this.map.getView().setCenter(fromLonLat([this.getAverageLongitude(this.GPSData), this.getAverageLatitude(this.GPSData)]));
         this.GPSMarks = this.createGPSMarkers(this.GPSData);
         this.addMarksInMap(this.GPSMarks, 'gpsMarks');
         this.initPoupEvent(this.map);
@@ -425,6 +425,28 @@ export class MapComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       //If you wan't to do something here lol
     });
+  }
+
+  getAverageLatitude(array: Array<DeviceGps>) {
+    let averagare = 0
+    let iteration = 0
+    array.forEach((element:DeviceGps) => {
+      averagare += element.latitude
+      iteration++
+    })
+    averagare = averagare/iteration
+    return averagare
+  }
+
+  getAverageLongitude(array: Array<DeviceGps>) {
+    let averagare = 0
+    let iteration = 0
+    array.forEach((element:DeviceGps) => {
+      averagare += element.longitude
+      iteration++
+    })
+    averagare = averagare/iteration
+    return averagare
   }
 
 }

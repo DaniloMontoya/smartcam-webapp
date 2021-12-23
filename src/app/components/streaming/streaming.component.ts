@@ -42,6 +42,10 @@ export class StreamingComponent implements OnInit {
   public minimize_carlist: boolean = false
   public id
 
+  public streaming_icon: string = "fullscreen"
+  public isStreamingFullScreen: boolean = false
+  public streaming_col_css: string = 'col-sm-8'
+
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
   constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
@@ -220,5 +224,11 @@ export class StreamingComponent implements OnInit {
       })
     });
     return icon
+  }
+
+  goFullScreen() {
+    this.isStreamingFullScreen = !this.isStreamingFullScreen
+    this.streaming_icon = this.isStreamingFullScreen ? 'fullscreen' :  'fullscreen_exit'
+    this.streaming_col_css = this.isStreamingFullScreen ? 'col-sm-12' :  'col-sm-8'
   }
 }
