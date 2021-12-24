@@ -3,13 +3,13 @@
     <mat-spinner [hidden]="GPSData !== undefined" color="primary" style="margin: auto"></mat-spinner>
     <mat-form-field *ngIf="GPSData?.content" appearance="standard" style="width: 100%; margin-bottom: 25px;">
         <mat-label>Buscar vehiculos</mat-label>
-        <input matInput placeholder="ABC123..." [(ngModel)]="search">
+        <input matInput placeholder="ABC123..." [(ngModel)]="search" (keydown.enter)="searchByPlate()">
         <mat-icon matSuffix>search</mat-icon>
         <mat-hint>Placa</mat-hint>
     </mat-form-field>
     <div class="mat-elevation-z8" *ngIf="GPSData">
         <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel *ngFor="let data of GPSData?.content | filter:search" [expanded]="data.imei === id">
+            <mat-expansion-panel *ngFor="let data of GPSData?.content" [expanded]="data.licensePlate === plate">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{data.licensePlate}}

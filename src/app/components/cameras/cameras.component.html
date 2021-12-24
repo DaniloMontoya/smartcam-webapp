@@ -14,6 +14,11 @@
             <td mat-cell *matCellDef="let element"> {{element.customer | titlecase}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="licensePlate">
+            <th mat-header-cell *matHeaderCellDef> Placa </th>
+            <td mat-cell *matCellDef="let element"> {{(element.licensePlate) ? (element.licensePlate) : "No Disponible"}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="lastStatus">
             <th mat-header-cell *matHeaderCellDef> Estado </th>
             <td mat-cell *matCellDef="let element"> {{element.lastStatus | translate}} </td>
@@ -28,7 +33,7 @@
             <th mat-header-cell *matHeaderCellDef> Livestreaming </th>
             <td mat-cell *matCellDef="let element">
                 <div *ngIf="element.lastStatus === 'ACTIVE' else notActive">
-                    <button (click)="openStream(element.imei)" mat-button><mat-icon>visibility</mat-icon></button>
+                    <button (click)="openStream(element)" mat-button><mat-icon>visibility</mat-icon></button>
                 </div>
             </td>
             <ng-template #notActive>

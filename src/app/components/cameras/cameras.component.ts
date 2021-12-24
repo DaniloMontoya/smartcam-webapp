@@ -11,7 +11,7 @@ import { DOMAIN_URL } from 'src/environments/domain.prod';
 export class CamerasComponent implements OnInit {
 
   camera_list: any;
-  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'lastUpdated', 'livestream'];
+  displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'licensePlate', 'lastUpdated', 'livestream'];
 
   constructor(private rest: RestService, private dialog: MatDialog) { }
 
@@ -21,8 +21,8 @@ export class CamerasComponent implements OnInit {
     }), error => console.error(error)
   }
 
-  openStream(imei_camera:string) {
-    this.dialog.open(StreamModal, { data: {imei:imei_camera} });
+  openStream(camera:any) {
+    this.dialog.open(StreamModal, { data: {imei:camera.imei, licensePlate:camera.licensePlate} });
   }
 
 }

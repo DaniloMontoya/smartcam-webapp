@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'map', component: MapComponent },
   { path: 'map/:id', component: MapComponent },
   { path: 'edit', component: EditComponent },
-  { path: 'edit/:id', component: EditComponent },
+  { path: 'edit/:plate', component: EditComponent },
   { path: 'speed-alert', component: SpeedAlertComponent },
   { path: 'sos-alert', component: SosAlertComponent },
   { path: 'stats/:id', component: StatsComponent },

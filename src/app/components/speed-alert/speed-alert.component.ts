@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -18,28 +18,45 @@ export class SpeedAlertComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'licensePlate', 'vehicle', 'speed', 'exceeded', 'maxSpeed', 'created', 'location'];
 
-  constructor(private rest: RestService, private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
-    this.rest.listAllSpeedAlert(this.pageIndex,this.pageSize).subscribe((response)=>{
+    this.rest.listAllSpeedAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
       this.speed_alerts = response
+      this.length = response.totalElements
     }), error => console.error(error)
   }
 
   loadNextPage(event) {
-    this.rest.listAllSpeedAlert(event.pageIndex, event.pageSize).subscribe((response:any) => {
-      this.pageIndex = event.pageIndex
-      this.pageSize = event.pageSize
-      this.length = response.totalElements
-      this.speed_alerts = response
-    }, error => console.error(error));
+    if(this.search) {
+      this.rest.listAllSpeedAlertByLicensePlate(event.pageIndex, event.pageSize, this.search).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.speed_alerts = response
+      }, error => console.error(error));
+    } else {
+      this.rest.listAllSpeedAlert(event.pageIndex, event.pageSize).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.speed_alerts = response
+      }, error => console.error(error));
+    }
   }
 
   SearchPlate() {
-    this.rest.listAllSpeedAlertByLicensePlate(this.pageIndex,this.pageSize, this.search).subscribe((response:any)=>{
-      this.speed_alerts = response.content
-      this.changeDetectorRefs.detectChanges();
-    }), error => console.log(error)
+    if(this.search) {
+      this.rest.listAllSpeedAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
+        this.speed_alerts = response
+        this.length = response.totalElements
+      }), error => console.log(error)
+    } else {
+      this.rest.listAllSpeedAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
+        this.speed_alerts = response
+        this.length = response.totalElements
+      }), error => console.error(error)
+    }
   }
 
 }

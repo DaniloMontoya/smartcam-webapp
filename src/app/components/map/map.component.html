@@ -54,7 +54,7 @@
                 <button [hidden]="!path_is_drawn" (click)="removePath()" mat-button>
                   <mat-icon color="warn">clear</mat-icon>
                 </button>
-                <button [routerLink]="['/edit',popDevice?.imei]" mat-button><mat-icon color="primary">edit</mat-icon></button>
+                <button [routerLink]="['/edit',popDevice?.licensePlate]" mat-button><mat-icon color="primary">edit</mat-icon></button>
                 <button [routerLink]="['/stats',popDevice?.imei]" mat-button><mat-icon color="primary">bar_chart</mat-icon></button>
                 <button [hidden]="popDevice?.ignition === 'Off'" (click)="openTurnOffDialog({vehicle: popDevice})" mat-button><mat-icon class="green-icon">power_settings_new</mat-icon></button>
                 <button [hidden]="popDevice?.ignition === 'On'" (click)="openUnlockDialog({vehicle: popDevice})" mat-button><mat-icon color="warn">power_settings_new</mat-icon></button>

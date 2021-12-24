@@ -22,6 +22,10 @@ export class RestService {
     return this.http.get(`rest/v1/gps/listAll/${page}/${size}`)
   }
 
+  listAllByClientLicensePlate(page, size, licensePlate) {
+    return this.http.get(`/rest/v1/gps/listAllBylicensePlate/${page}/${size}/${licensePlate}`)
+  }
+
   listAllPositionByRoute(idRoute) {
     return this.http.get(`rest/v1/gps/routes/tracks/${idRoute}`)
   }
@@ -84,6 +88,10 @@ export class RestService {
 
   updateClient(client:Client) {
     return this.http.put('rest/client', client)
+  }
+
+  getClientPosition() {
+    return this.http.get('rest/client/center')
   }
 
 }

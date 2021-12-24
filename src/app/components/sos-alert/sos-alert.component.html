@@ -24,7 +24,7 @@
 
             <ng-container matColumnDef="vehicle">
                 <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
-                <td mat-cell *matCellDef="let element"> {{element.typeVehicle | translate}} </td>
+                <td mat-cell *matCellDef="let element"> {{(element.typeVehicle) ? (element.typeVehicle | translate) : "No Disponible"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="description">

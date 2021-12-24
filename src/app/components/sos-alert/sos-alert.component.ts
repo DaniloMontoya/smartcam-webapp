@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -18,28 +18,45 @@ export class SosAlertComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'licensePlate', 'vehicle', 'description', 'created', 'location'];
 
-  constructor(private rest: RestService, private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
-    this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response)=>{
+    this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
       this.sos_alerts = response
+      this.length = response.totalElements
     }), error => console.error(error)
   }
 
   loadNextPage(event) {
-    this.rest.listAllSosAlert(event.pageIndex, event.pageSize).subscribe((response:any) => {
-      this.pageIndex = event.pageIndex
-      this.pageSize = event.pageSize
-      this.length = response.totalElements
-      this.sos_alerts = response
-    }, error => console.error(error));
+    if(this.search) {
+      this.rest.listAllSosAlertByLicensePlate(event.pageIndex, event.pageSize, this.search).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.sos_alerts = response
+      }, error => console.error(error));
+    } else {
+      this.rest.listAllSosAlert(event.pageIndex, event.pageSize).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.sos_alerts = response
+      }, error => console.error(error));
+    }
   }
 
   onSearchPlate() {
-    this.rest.listAllSosAlertByLicensePlate(this.pageIndex,this.pageSize, this.search).subscribe((response:any)=>{
-      this.sos_alerts = response.content
-      this.changeDetectorRefs.detectChanges()
-    }), error => console.log(error)
+    if(this.search) {
+      this.rest.listAllSosAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
+        this.sos_alerts = response.content
+        this.length = response.totalElements
+      }), error => console.log(error)
+    } else {
+      this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
+        this.sos_alerts = response
+        this.length = response.totalElements
+      }), error => console.error(error)
+    }
   }
 
 

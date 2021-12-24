@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8" *ngIf="speed_alerts">
-        <table mat-table [dataSource]="speed_alerts?.content | filter:search">
+        <table mat-table [dataSource]="speed_alerts?.content">
 
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -24,7 +24,7 @@
 
             <ng-container matColumnDef="vehicle">
                 <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
-                <td mat-cell *matCellDef="let element"> {{element.vehicle | translate}} </td>
+                <td mat-cell *matCellDef="let element"> {{(element.vehicle) ? (element.vehicle | translate) : "No Disponible"}} </td>
             </ng-container>
 
             <ng-container matColumnDef="exceeded">

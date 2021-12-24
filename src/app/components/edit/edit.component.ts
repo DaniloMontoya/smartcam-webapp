@@ -13,26 +13,29 @@ import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
 })
 export class EditComponent implements OnInit {
 
-  public id
+  public plate
   public search: string
   public GPSData:any
   public length = 100;
+  public pageIndex = 0
   public pageSize = 13;
-  public pageSizeOptions: number[] = [15, 30, 50, 100];
+  public pageSizeOptions: number[] = [13, 30, 50, 100];
 
   constructor(public rest: RestService, private _snackBar: MatSnackBar, private _Activatedroute:ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.id = this._Activatedroute.snapshot.paramMap.get("id");
-    this.pageSize = this.id ? 100 :13
-    this.rest.listAllAsPage(0,this.pageSize).subscribe((response:any) => {
-      this.length = response.totalElements
-      this.GPSData = response
-      if(this.id) {
-        this.search = this.id
-        this.GPSData.content.sort((data)=>{ return data.imei == this.id ? -1 : data.imei == this.id ? 1 : 0; });
-      }
-    }, error => console.error(error));
+    this.plate = this._Activatedroute.snapshot.paramMap.get("plate");
+    if(this.plate) {
+      this.rest.listAllByClientLicensePlate(this.pageIndex,this.pageSize, this.plate).subscribe((response:any) => {
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error))
+    } else {
+      this.rest.listAllAsPage(this.pageIndex,this.pageSize).subscribe((response:any) => {
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error));
+    }
   }
 
   updateDevice(device:DeviceGps) {
@@ -47,8 +50,23 @@ export class EditComponent implements OnInit {
     }), error => this._snackBar.open(error.message)
   }
 
+  searchByPlate() {
+    if(this.search) {
+      this.rest.listAllByClientLicensePlate(0,this.pageSize, this.search).subscribe((response:any) => {
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error))
+    } else {
+      this.rest.listAllAsPage(this.pageIndex,this.pageSize).subscribe((response:any) => {
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error));
+    }
+  }
+
   loadNextPage(event) {
     this.rest.listAllAsPage(event.pageIndex, event.pageSize).subscribe((response:any) => {
+      this.pageIndex = event.pageIndex
       this.pageSize = event.pageSize
       this.length = response.totalElements
       this.GPSData = response

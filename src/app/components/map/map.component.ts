@@ -128,7 +128,9 @@ export class MapComponent implements OnInit, OnDestroy {
     this.rest.listAll().subscribe((response:Array<DeviceGps>) => {
       this.GPSData = response
       if(this.GPSData) {
-        //this.map.getView().setCenter(fromLonLat([this.getAverageLongitude(this.GPSData), this.getAverageLatitude(this.GPSData)]));
+        this.rest.getClientPosition().subscribe((res:any)=>{
+          this.map.getView().setCenter(fromLonLat([res.longitude, res.latitude]));
+        })
         this.GPSMarks = this.createGPSMarkers(this.GPSData);
         this.addMarksInMap(this.GPSMarks, 'gpsMarks');
         this.initPoupEvent(this.map);
@@ -427,26 +429,35 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAverageLatitude(array: Array<DeviceGps>) {
-    let averagare = 0
-    let iteration = 0
-    array.forEach((element:DeviceGps) => {
-      averagare += element.latitude
-      iteration++
-    })
-    averagare = averagare/iteration
-    return averagare
-  }
+  getCenterPosition(array: Array<DeviceGps>) {
+    let positon_length = array.length
 
-  getAverageLongitude(array: Array<DeviceGps>) {
-    let averagare = 0
-    let iteration = 0
-    array.forEach((element:DeviceGps) => {
-      averagare += element.longitude
-      iteration++
-    })
-    averagare = averagare/iteration
-    return averagare
+    let x = 0
+    let y = 0
+    let z = 0
+
+    array.forEach((element: DeviceGps) => {
+      let lat = element.latitude * Math.PI / 180
+      let lon = element.longitude * Math.PI / 180
+
+      let a = Math.cos(lat) * Math.cos(lon)
+      let b = Math.cos(lat) * Math.sin(lon)
+      let c = Math.sin(lat)
+
+      x += a
+      y += b
+      z += c
+    });
+
+    x /= positon_length
+    y /= positon_length
+    z /= positon_length
+
+    let lon = Math.atan2(y,x)
+    let hyp = Math.sqrt(x * x + y * y)
+    let lat = Math.atan2(z, hyp)
+
+    return [lat * 180 / Math.PI, lon * 180 / Math.PI]
   }
 
 }
