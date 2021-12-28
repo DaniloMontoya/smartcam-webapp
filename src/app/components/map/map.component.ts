@@ -91,17 +91,18 @@ export class MapComponent implements OnInit, OnDestroy {
       if(data.imei === response.id) {
         let lastIgnition = data.ignition
         data.alert = response.alert
-        data.crs = response.crs
-        data.imei = response.id
+        //data.crs = response.crs
+        //data.imei = response.id
         data.ignition = response.ignition
         data.latitude = response.latitude
-        data.licensePlate = response.licensePlate
+        //data.licensePlate = response.licensePlate
         data.longitude = response.longitude
         data.spd = response.spd
         data.cameraStatus = response.cameraStatus
-        data.imeiCamera = response.imeiCamera
+        //data.imeiCamera = response.imeiCamera
 
-        this.showAlertVehicle(response, data.imei)
+        if(response.alert || response.alert.length !== 0 )
+          this.showAlertVehicle(response.alert, data.imei)
 
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
@@ -128,9 +129,6 @@ export class MapComponent implements OnInit, OnDestroy {
     this.rest.listAll().subscribe((response:Array<DeviceGps>) => {
       this.GPSData = response
       if(this.GPSData) {
-        this.rest.getClientPosition().subscribe((res:any)=>{
-          this.map.getView().setCenter(fromLonLat([res.longitude, res.latitude]));
-        })
         this.GPSMarks = this.createGPSMarkers(this.GPSData);
         this.addMarksInMap(this.GPSMarks, 'gpsMarks');
         this.initPoupEvent(this.map);
@@ -139,14 +137,18 @@ export class MapComponent implements OnInit, OnDestroy {
             if(this.id === data.imei)
               this.centerViewToDevice(data)
           })
+        } else {
+          this.rest.getClientPosition().subscribe((res:any)=>{
+            this.map.getView().setCenter(fromLonLat([res.longitude, res.latitude]));
+          })
         }
       }
     }, error => console.error(error));
   }
 
-  private showAlertVehicle(response: any, imei:string) {
-    if(response.alert !== '00;Not Message;00')
-      this.snackBar.showNotification(response.alert, 'Revisar', imei, new Date())
+  private showAlertVehicle(alert: string, imei:string) {
+    if(alert !== '00;Not Message;00')
+      this.snackBar.showNotification(alert, 'Revisar', imei, new Date())
   }
 
   public removePath() {

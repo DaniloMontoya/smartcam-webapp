@@ -4,7 +4,7 @@
 
     <mat-form-field *ngIf="speed_alerts" appearance="standard" style="width: 100%; margin-bottom: 25px;">
         <mat-label>Buscar vehiculos</mat-label>
-        <input matInput placeholder="ABC123..." [(ngModel)]="search" (keydown.enter)="SearchPlate()">
+        <input matInput placeholder="ABC123..." [(ngModel)]="search" (keydown.enter)="searchPlate()">
         <mat-icon matSuffix>search</mat-icon>
         <mat-hint>Placa</mat-hint>
     </mat-form-field>

@@ -93,20 +93,22 @@ export class StreamingComponent implements OnInit {
       if(data.imei === response.id) {
         let lastIgnition = data.ignition
         data.alert = response.alert
-        data.crs = response.crs
-        data.imei = response.id
+        //data.crs = response.crs
+        //data.imei = response.id
         data.ignition = response.ignition
         data.latitude = response.latitude
-        data.licensePlate = response.licensePlate
+        //data.licensePlate = response.licensePlate
         data.longitude = response.longitude
         data.spd = response.spd
-        this.centerViewToDevice(data)
+        data.cameraStatus = response.cameraStatus
+        //data.imeiCamera = response.imeiCamera
 
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
             if(lastIgnition !== data.ignition) mark.setStyle(this.setVehicleIcon(data))
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
+            this.centerViewToDevice(data)
           }
         })
       }
@@ -228,7 +230,7 @@ export class StreamingComponent implements OnInit {
 
   goFullScreen() {
     this.isStreamingFullScreen = !this.isStreamingFullScreen
-    this.streaming_icon = this.isStreamingFullScreen ? 'fullscreen' :  'fullscreen_exit'
+    this.streaming_icon = this.isStreamingFullScreen ? 'fullscreen_exit' :  'fullscreen'
     this.streaming_col_css = this.isStreamingFullScreen ? 'col-sm-12' :  'col-sm-8'
   }
 }

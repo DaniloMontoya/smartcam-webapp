@@ -45,7 +45,7 @@ export class SpeedAlertComponent implements OnInit {
     }
   }
 
-  SearchPlate() {
+  searchPlate() {
     if(this.search) {
       this.rest.listAllSpeedAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
         this.speed_alerts = response
