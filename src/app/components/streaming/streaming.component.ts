@@ -42,10 +42,6 @@ export class StreamingComponent implements OnInit {
   public minimize_carlist: boolean = false
   public id
 
-  public streaming_icon: string = "fullscreen"
-  public isStreamingFullScreen: boolean = false
-  public streaming_col_css: string = 'col-sm-8'
-
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
   constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
@@ -63,7 +59,7 @@ export class StreamingComponent implements OnInit {
   }
 
   initWebsocket(){
-    let ws:WebSocket = new SockJS(`/gps-websocket`);
+    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
     this.stompClient = Stomp.over(ws);
     const that = this;
     this.stompClient.connect({}, (frame:any) => {
@@ -226,11 +222,5 @@ export class StreamingComponent implements OnInit {
       })
     });
     return icon
-  }
-
-  goFullScreen() {
-    this.isStreamingFullScreen = !this.isStreamingFullScreen
-    this.streaming_icon = this.isStreamingFullScreen ? 'fullscreen_exit' :  'fullscreen'
-    this.streaming_col_css = this.isStreamingFullScreen ? 'col-sm-12' :  'col-sm-8'
   }
 }

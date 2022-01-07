@@ -1,11 +1,8 @@
 <h1 class="title">Streaming de Cámaras</h1>
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
-        <div [class]="streaming_col_css">
-            <div class="streaming">
-                <iframe [src]="urlStreaming | safe:'resourceUrl'" *ngIf="streamStatus else loadingStream"></iframe>
-                <button [hidden]="!streamStatus" mat-button (click)="goFullScreen()"><mat-icon>{{streaming_icon}}</mat-icon></button>
-            </div>
+        <div class="col-sm-8">
+            <iframe class="streaming" [src]="urlStreaming | safe:'resourceUrl'" *ngIf="streamStatus else loadingStream"></iframe>
 
             <ng-template #loadingStream>
                 <mat-spinner color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
@@ -15,7 +12,7 @@
                 <h3 class="warn-color center">El Streaming ha fallado en hacer conexión...</h3>
             </ng-template>
         </div>
-        <div [hidden]="isStreamingFullScreen" class="col-sm-4">
+        <div class="col-sm-4">
             <div id="minimap" class="map"></div>
         </div>
     </div>

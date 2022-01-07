@@ -19,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DOMAIN_URL } from 'src/environments/domain.prod';
 
 export const DEFAULT_ANCHOR = [0.5, 1];
 export const DEFAULT_ICON_PATH = '../../../assets/';
@@ -61,7 +62,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   initWebsocket(){
-    let ws:WebSocket = new SockJS(`/gps-websocket`);
+    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
     this.stompClient = Stomp.over(ws);
     const that = this;
     this.stompClient.connect({}, (frame:any) => {

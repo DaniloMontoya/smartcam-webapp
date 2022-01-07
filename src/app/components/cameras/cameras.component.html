@@ -33,11 +33,11 @@
             <th mat-header-cell *matHeaderCellDef> Livestreaming </th>
             <td mat-cell *matCellDef="let element">
                 <div *ngIf="element.lastStatus === 'ACTIVE' else notActive">
-                    <button (click)="openStream(element)" mat-button><mat-icon>visibility</mat-icon></button>
+                    <button (click)="openStream(element)" mat-button><mat-icon>videocam</mat-icon></button>
                 </div>
             </td>
             <ng-template #notActive>
-                <button mat-button disabled><mat-icon>visibility_off</mat-icon></button>
+                <button mat-button disabled><mat-icon>videocam_off</mat-icon></button>
             </ng-template>
 
         </ng-container>
