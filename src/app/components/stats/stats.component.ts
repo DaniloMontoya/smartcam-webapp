@@ -17,16 +17,15 @@ export class StatsComponent implements OnInit {
   selectedRange: string = 'today'
   dateReportList: string [] = []
   distanceInKmList: number [] = []
-  showDatepicker: boolean
+  showRangeDatepicker: boolean
+  showDayDatepicker: boolean
 
-  date = new Date();
-  dd = String(this.date.getDate()).padStart(2, '0');
-  ten_dd = String(this.date.getDate()-10).padStart(2, '0');
-  mm = String(this.date.getMonth() + 1).padStart(2, '0'); //January is 0!
-  yyyy = this.date.getFullYear();
+  date = new Date()
+  today = this.formatDate(this.date.toString())
+  ten_days_ago = this.formatDate(new Date(this.date.getTime() - (10 * 24 * 60 * 60 * 1000)).toString())
 
-  today = `${this.yyyy}-${this.mm}-${this.dd}`
-  ten_days_ago = `${this.yyyy}-${this.mm}-${this.ten_dd}`
+  startDate: any
+  endDate: any
 
   range = new FormGroup({
     start: new FormControl(),
@@ -97,30 +96,55 @@ export class StatsComponent implements OnInit {
     switch (this.selectedRange) {
       case 'today':
         this.rest.dayReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
-        this.showDatepicker = false
+        this.showRangeDatepicker = false
+        this.showDayDatepicker = false
         break;
       case 'week':
         this.rest.weekReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
-        this.showDatepicker = false
+        this.showRangeDatepicker = false
+        this.showDayDatepicker = false
         break;
       case 'custom':
         this.rest.customDateReport(this.id, this.ten_days_ago, this.today).subscribe((response: any)=>{ this.setGraph(response) })
-        this.showDatepicker = true
+        this.showRangeDatepicker = true
+        this.showDayDatepicker = false
+        break;
+      case 'day':
+        this.rest.dayReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
+        this.showRangeDatepicker = false
+        this.showDayDatepicker = true
         break;
     }
   }
 
   startChange(event:any) {
-    this.rest.customDateReport(this.id, this.parseDate(event.value), this.parseDate(String(new Date()))).subscribe((response: any)=>{ this.setGraph(response) })
+    this.startDate = event.value
+    this.endDate = this.endDate ? this.endDate : this.today
+    this.rest.customDateReport(this.id, this.formatDate(this.startDate.toString()), this.formatDate(this.endDate.toString())).subscribe((response: any)=>{ this.setGraph(response) })
   }
 
-  parseDate(date:string) {
-    let a = new Date(Date.parse(date))
-    let year = a.getFullYear()
-    let month = String(a.getMonth()).length+1 === 1 ? `0${a.getMonth()+1}` : a.getMonth()+1
-    let day = String(a.getDate()).length === 1 ? `0${a.getDate()}` : a.getDate()
+  endChange(event:any) {
+    this.endDate = event.value
+    this.startDate = this.startDate ? this.startDate : this.ten_days_ago
+    this.rest.customDateReport(this.id, this.formatDate(this.startDate.toString()), this.formatDate(this.endDate.toString())).subscribe((response: any)=>{ this.setGraph(response) })
+  }
 
-    return `${year}-${month}-${day}`
+  loadDayReport(event:any) {
+    this.rest.customDateReport(this.id, this.formatDate(event.value), this.formatDate(event.value)).subscribe((response: any)=>{ this.setGraph(response) })
+  }
+
+  formatDate(date:string) {
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   loadNextPage(event) {

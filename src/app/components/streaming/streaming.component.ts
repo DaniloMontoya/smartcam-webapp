@@ -223,4 +223,5 @@ export class StreamingComponent implements OnInit {
     });
     return icon
   }
+
 }
