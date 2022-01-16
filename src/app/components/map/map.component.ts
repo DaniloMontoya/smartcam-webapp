@@ -51,9 +51,9 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
     this.map = this.createOpenLayerMap();
-    this.makeCursorToDrag()
     this.loadGPSData();
     this.initWebsocket()
+    this.makeCursorToDrag()
   }
 
   ngOnDestroy() {
@@ -115,13 +115,8 @@ export class MapComponent implements OnInit, OnDestroy {
           }
         })
 
-        if(this.path_is_drawn) {
-          this.pathMarks.forEach((mark)=>{
-            let mark_id = mark.get("name")
-            if(mark_id === data.activeIdRoute)
-              this.addPathToData(mark_id, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
-          })
-        }
+        if(this.path_is_drawn)
+          this.addPathToData(data.activeIdRoute, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
       }
     })
   }
@@ -298,16 +293,6 @@ export class MapComponent implements OnInit, OnDestroy {
       var hit = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => { return true; });
       this.map.getTargetElement().style.cursor = hit ? 'pointer' : ''
   });
-    /**
-    this.map.getViewport().style.cursor = "-webkit-grab";
-    this.map.on('pointerdrag', (evt) => {
-      this.map.getViewport().style.cursor = "-webkit-grabbing";
-    });
-
-    this.map.on('pointermove', (evt) => {
-      this.map.getViewport().style.cursor = "-webkit-grab";
-    });
-    */
   }
 
   private createGPSMark(GPSDevice: DeviceGps): Feature<any>{
@@ -334,7 +319,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private createPathMark(path: LatLon, path_id): Feature<any>{
-    let icon_path = path.spd > 0 ? `${DEFAULT_ICON_PATH}track_move.svg` : `${DEFAULT_ICON_PATH}track_stopped.svg`
+    let icon_path = `${DEFAULT_ICON_PATH}track_move.svg`
 
     let marker = new Feature({
       geometry: new Point(fromLonLat([path.longitude, path.latitude])),
@@ -370,11 +355,11 @@ export class MapComponent implements OnInit, OnDestroy {
     //click Event
     map.on('singleclick', (event) => {
       this.hidePoup(closer, overlay);
-      this.removePath()
       map.forEachFeatureAtPixel(event.pixel,(feature, layer) => {
         let car_imei = feature.get("name")
         this.GPSData.forEach((element) => { if(element.imei === car_imei) this.popDevice = element});
         let coordinate = event.coordinate;
+        this.removePath()
         this.refreshCardsInfo(this.popDevice, plate, spd, longitude, latitude);
         overlay.setPosition(coordinate);
       });
