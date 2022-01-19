@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CompatClient, Stomp } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 import { RestService } from 'src/app/services/rest.service';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 
@@ -8,10 +10,11 @@ import { DOMAIN_URL } from 'src/environments/domain.prod';
   templateUrl: './cameras.component.html',
   styleUrls: ['./cameras.component.scss']
 })
-export class CamerasComponent implements OnInit {
+export class CamerasComponent implements OnInit, OnDestroy {
 
   camera_list: any;
   displayedColumns: string[] = ['imei', 'customer', 'lastStatus', 'licensePlate', 'lastUpdated', 'livestream'];
+  public stompClient: CompatClient | undefined
 
   constructor(private rest: RestService, private dialog: MatDialog) { }
 
@@ -19,6 +22,50 @@ export class CamerasComponent implements OnInit {
     this.rest.listAllCameras().subscribe((response)=>{
       this.camera_list = response
     }), error => console.error(error)
+    this.initWebsocket()
+  }
+
+  ngOnDestroy(): void {
+    this.stompClient.disconnect();
+  }
+
+  initWebsocket(){
+    this.stompClient = Stomp.over(() => new SockJS(`${DOMAIN_URL}/gps-websocket`));
+    this.stompClient.connect({}, this.connect_callback, this.error_callback)
+    this.stompClient.reconnect_delay = 2500;
+  }
+
+  public connect_callback = () => {
+    this._subcribeTopic('/topic/gps');
+  }
+
+  public error_callback = (error) => {
+    console.error(error, "Reconnecting WS", `${DOMAIN_URL}/gps-websocket`);
+    setTimeout(() => { this.initWebsocket(); }, 2500);
+  };
+
+  private _subcribeTopic(topic: string) {
+    this.stompClient.subscribe(topic, (message:any) => {
+      if(!message.body)
+        return;
+
+      let model: any = JSON.parse(message.body);
+        switch (topic) {
+          case '/topic/gps':
+            this._updateWebSocketResponse(model);
+            break;
+        }
+    });
+  }
+
+  private _updateWebSocketResponse (response:any) {
+    this.camera_list.forEach((data)=>{
+      if(response.licensePlate === data.licensePlate) {
+        data.cameraStatus = response.cameraStatus
+        data.lastStatus = response.cameraStatus
+        data.lastUpdated = new Date().toString();
+      }
+    })
   }
 
   openStream(camera:any) {
@@ -37,6 +84,7 @@ export class StreamModal {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService) {
     this.rest.askStreamingCamera(data.imei).subscribe((res:any)=>{
       this.response = res
+      //this.url = `http://costera.moviint.net/video.html?imei=${data.imei}`
       this.url = `http://${DOMAIN_URL}/video.html?imei=${data.imei}`
     }), error => {
       this.dialogRef.close()

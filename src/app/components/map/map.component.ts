@@ -62,28 +62,31 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   initWebsocket(){
-    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, (frame:any) => {
-      if(!that.stompClient){
-        return;
-      }
-
-      this._subcribeTopic('/topic/gps');
-    });
+    this.stompClient = Stomp.over(() => new SockJS(`${DOMAIN_URL}/gps-websocket`));
+    this.stompClient.connect({}, this.connect_callback, this.error_callback)
+    this.stompClient.reconnect_delay = 2500;
   }
 
+  public connect_callback = () => {
+    this._subcribeTopic('/topic/gps');
+  }
+
+  public error_callback = (error) => {
+    console.error(error, "Reconnecting WS", `${DOMAIN_URL}/gps-websocket`);
+    setTimeout(() => { this.initWebsocket(); }, 2500);
+  };
+
   private _subcribeTopic(topic: string) {
-    if(!this.stompClient){
-      console.error("Error to configure mailbot websocket");
-      return;
-    }
     this.stompClient.subscribe(topic, (message:any) => {
-      if (message.body) {
-        let gpsModel: any = JSON.parse(message.body);
-        this._updateWebSocketResponse(gpsModel);
-      }
+      if(!message.body)
+        return;
+
+      let model: any = JSON.parse(message.body);
+        switch (topic) {
+          case '/topic/gps':
+            this._updateWebSocketResponse(model);
+            break;
+        }
     });
   }
 
@@ -108,7 +111,10 @@ export class MapComponent implements OnInit, OnDestroy {
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
-            if(lastIgnition !== data.ignition) mark.setStyle(this.setVehicleIcon(data))
+            if(lastIgnition !== data.ignition) {
+              mark.setStyle(this.setVehicleIcon(data))
+              this.reorderGPSDataByIgnition()
+            }
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
             if(this.selectedDevice && data.imei === this.selectedDevice.imei)
               this.centerViewToDevice(this.selectedDevice)
@@ -128,6 +134,7 @@ export class MapComponent implements OnInit, OnDestroy {
         this.GPSMarks = this.createGPSMarkers(this.GPSData);
         this.addMarksInMap(this.GPSMarks, 'gpsMarks');
         this.initPoupEvent(this.map);
+        this.reorderGPSDataByIgnition()
         if(this.id) {
           this.GPSData.forEach((data) => {
             if(this.id === data.imei)
@@ -264,6 +271,14 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     return openLayerMap;
+  }
+
+  private reorderGPSDataByIgnition() {
+    this.GPSData.sort((first) => {
+      if(first.ignition === 'On') { return -1; }
+      if(first.ignition === 'Off') { return 1; }
+      return 0;
+    })
   }
 
   private addLinesInMap(poinpathData:Array<LatLon>) {

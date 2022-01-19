@@ -1,7 +1,7 @@
 <h1 class="title">Streaming de Cámaras</h1>
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-md-8">
             <iframe class="streaming" [src]="urlStreaming | safe:'resourceUrl'" *ngIf="streamStatus else loadingStream"></iframe>
 
             <ng-template #loadingStream>
@@ -12,7 +12,7 @@
                 <h3 class="warn-color center">El Streaming ha fallado en hacer conexión...</h3>
             </ng-template>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <div id="minimap" class="map"></div>
         </div>
     </div>

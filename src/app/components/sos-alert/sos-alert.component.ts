@@ -50,7 +50,7 @@ export class SosAlertComponent implements OnInit {
       this.rest.listAllSosAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
         this.sos_alerts = response.content
         this.length = response.totalElements
-      }), error => console.log(error)
+      }), error => console.error(error)
     } else {
       this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
         this.sos_alerts = response

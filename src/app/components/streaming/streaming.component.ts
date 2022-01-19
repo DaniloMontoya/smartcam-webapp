@@ -59,28 +59,31 @@ export class StreamingComponent implements OnInit {
   }
 
   initWebsocket(){
-    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, (frame:any) => {
-      if(!that.stompClient){
-        return;
-      }
-
-      this._subcribeTopic('/topic/gps');
-    });
+    this.stompClient = Stomp.over(() => new SockJS(`${DOMAIN_URL}/gps-websocket`));
+    this.stompClient.connect({}, this.connect_callback, this.error_callback)
+    this.stompClient.reconnect_delay = 2500;
   }
 
+  public connect_callback = () => {
+    this._subcribeTopic('/topic/gps');
+  }
+
+  public error_callback = (error) => {
+    console.error(error, "Reconnecting WS", `${DOMAIN_URL}/gps-websocket`);
+    setTimeout(() => { this.initWebsocket(); }, 2500);
+  };
+
   private _subcribeTopic(topic: string) {
-    if(!this.stompClient){
-      console.error("Error to configure websocket");
-      return;
-    }
     this.stompClient.subscribe(topic, (message:any) => {
-      if (message.body) {
-        let gpsModel: any = JSON.parse(message.body);
-        this._updateWebSocketResponse(gpsModel);
-      }
+      if(!message.body)
+        return;
+
+      let model: any = JSON.parse(message.body);
+        switch (topic) {
+          case '/topic/gps':
+            this._updateWebSocketResponse(model);
+            break;
+        }
     });
   }
 
@@ -133,6 +136,7 @@ export class StreamingComponent implements OnInit {
     this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
       this.urlStreaming = `http://${DOMAIN_URL}/video.html?imei=${device.imeiCamera}`
+      //this.urlStreaming = `http://costera.moviint.net/video.html?imei=${device.imeiCamera}`
     })
   }
 

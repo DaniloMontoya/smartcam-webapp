@@ -50,7 +50,7 @@ export class SpeedAlertComponent implements OnInit {
       this.rest.listAllSpeedAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
         this.speed_alerts = response
         this.length = response.totalElements
-      }), error => console.log(error)
+      }), error => console.error(error)
     } else {
       this.rest.listAllSpeedAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
         this.speed_alerts = response
