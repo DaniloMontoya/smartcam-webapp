@@ -104,6 +104,7 @@ export class MapComponent implements OnInit, OnDestroy {
         data.spd = response.spd
         data.cameraStatus = response.cameraStatus
         //data.imeiCamera = response.imeiCamera
+        data.lastUpdate = new Date().toString();
 
         if(response.alert || response.alert.length !== 0 )
           this.showAlertVehicle(response.alert, data.imei)
@@ -120,6 +121,9 @@ export class MapComponent implements OnInit, OnDestroy {
               this.centerViewToDevice(this.selectedDevice)
           }
         })
+
+        if(this.popDevice?.imei === response.id)
+          this.popDevice = data
 
         if(this.path_is_drawn)
           this.addPathToData(data.activeIdRoute, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
@@ -356,10 +360,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
     let container: HTMLElement = document.getElementById('popup');
     container.hidden = false;
-    let plate: HTMLElement = document.getElementById('plate');
-    let spd: HTMLElement = document.getElementById('spd');
-    let longitude: HTMLElement = document.getElementById('longitude');
-    let latitude: HTMLElement = document.getElementById('latitude');
 
     var closer = document.getElementById('popup-closer');
     let overlay: Overlay = this.createOverlay(container);
@@ -375,17 +375,9 @@ export class MapComponent implements OnInit, OnDestroy {
         this.GPSData.forEach((element) => { if(element.imei === car_imei) this.popDevice = element});
         let coordinate = event.coordinate;
         this.removePath()
-        this.refreshCardsInfo(this.popDevice, plate, spd, longitude, latitude);
         overlay.setPosition(coordinate);
       });
     });
-  }
-
-  private refreshCardsInfo(gpsData:DeviceGps, plate: HTMLElement, spd: HTMLElement, longitude: HTMLElement, latitude: HTMLElement) {
-    plate.innerHTML= `Placa: ${gpsData.licensePlate}`;
-    spd.innerHTML= `Velocidad: ${gpsData.spd}km/h`;
-    longitude.innerHTML= `Longitud: ${gpsData.longitude}`;
-    latitude.innerHTML= `Latitud: ${gpsData.latitude}`;
   }
 
   private createOverlay(container: HTMLElement): Overlay{
