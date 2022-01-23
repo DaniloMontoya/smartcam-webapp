@@ -154,7 +154,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private showAlertVehicle(alert: string, imei:string) {
-    if(alert !== '00;Not Message;00')
+    //if(alert !== '00;Not Message;00')
+    if(alert === '42;Alert is sent when the device turn on Panic Button(Input);')
       this.snackBar.showNotification(alert, 'Revisar', imei, new Date())
   }
 

@@ -136,7 +136,6 @@ export class StreamingComponent implements OnInit {
     this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
       this.urlStreaming = `${DOMAIN_URL}/video.html?imei=${device.imeiCamera}`
-      //this.urlStreaming = `http://costera.moviint.net/video.html?imei=${device.imeiCamera}`
     })
   }
 
