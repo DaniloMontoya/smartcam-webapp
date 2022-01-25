@@ -3,9 +3,8 @@
       <mat-icon [hidden]="minimize_carlist" class="mat-18">expand_less</mat-icon>
       <mat-icon [hidden]="!minimize_carlist" class="mat-18">expand_more</mat-icon>
     </button>
-    <br>
-    <mat-card-title>Vehiculos</mat-card-title>
-    <div [hidden]="minimize_carlist">
+    <mat-card-title style="font-size: 32px; margin-top: 16px;">Vehiculos</mat-card-title>
+    <div [hidden]="minimize_carlist" style="margin-top: -16px;">
         <mat-form-field appearance="standard">
             <mat-label>Buscar vehiculos</mat-label>
             <input matInput placeholder="ABC123..." [(ngModel)]="search">
