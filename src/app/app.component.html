@@ -29,9 +29,11 @@
             </div>
         </mat-toolbar>
         <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
-            <mat-card style="max-width: 230px">
+            <mat-card style="max-width: 230px; margin-right: 8px;">
+                <mat-card-title>Peggie Sue</mat-card-title>
+                <mat-card-subtitle>{{client?.name | titlecase}}</mat-card-subtitle>
                 <mat-card-content class="example-button-row">
-                    <button mat-raised-button>Editar</button>
+                    <button mat-raised-button [routerLink]="['/config']">Editar</button>
                     <button mat-raised-button color="primary" (click)="auth.logout()" style="margin-left: 10px;">Cerrar Sesión</button>
                 </mat-card-content>
             </mat-card>

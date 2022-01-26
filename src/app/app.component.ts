@@ -20,7 +20,7 @@ export class AppComponent {
   navigations = [
     {icon: 'location_on', name: 'Mapa', route: '/map'},
     {icon: 'directions_car', name: 'Vehículos', route: '/edit'},
-    {icon: 'video_library', name: 'Grabaciones', route: 'playback'},
+    {icon: 'video_library', name: 'Grabaciones', route: '/video'},
     {icon: 'video_camera_back', name: 'Cámaras disponibles', route: '/cameras'},
     {icon: 'taxi_alert', name: 'Alertas de velocidad', route: '/speed-alert'},
     {icon: 'support', name: 'Alertas S.O.S', route: '/sos-alert'},

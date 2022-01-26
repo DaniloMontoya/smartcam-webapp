@@ -372,10 +372,10 @@ export class MapComponent implements OnInit, OnDestroy {
     map.on('singleclick', (event) => {
       this.hidePoup(closer, overlay);
       map.forEachFeatureAtPixel(event.pixel,(feature, layer) => {
+        this.removePath()
         let car_imei = feature.get("name")
         this.GPSData.forEach((element) => { if(element.imei === car_imei) this.popDevice = element});
         let coordinate = event.coordinate;
-        this.removePath()
         overlay.setPosition(coordinate);
       });
     });
