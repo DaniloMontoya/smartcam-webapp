@@ -29,7 +29,7 @@ export class SpeedAlertComponent implements OnInit {
 
   loadNextPage(event) {
     if(this.search) {
-      this.rest.listAllSpeedAlertByLicensePlate(event.pageIndex, event.pageSize, this.search).subscribe((response:any) => {
+      this.rest.listAllSpeedAlertByLicensePlate(event.pageIndex, event.pageSize, this.search.toUpperCase()).subscribe((response:any) => {
         this.pageIndex = event.pageIndex
         this.pageSize = event.pageSize
         this.length = response.totalElements
@@ -47,7 +47,7 @@ export class SpeedAlertComponent implements OnInit {
 
   searchPlate() {
     if(this.search) {
-      this.rest.listAllSpeedAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
+      this.rest.listAllSpeedAlertByLicensePlate(0,this.pageSize, this.search.toUpperCase()).subscribe((response:any)=>{
         this.speed_alerts = response
         this.length = response.totalElements
       }), error => console.error(error)

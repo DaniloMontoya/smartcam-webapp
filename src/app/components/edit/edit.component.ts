@@ -52,7 +52,7 @@ export class EditComponent implements OnInit {
 
   searchByPlate() {
     if(this.search) {
-      this.rest.listAllByClientLicensePlate(0,this.pageSize, this.search).subscribe((response:any) => {
+      this.rest.listAllByClientLicensePlate(0,this.pageSize, this.search.toUpperCase()).subscribe((response:any) => {
         this.length = response.totalElements
         this.GPSData = response
       }, error => console.error(error))
@@ -65,12 +65,21 @@ export class EditComponent implements OnInit {
   }
 
   loadNextPage(event) {
-    this.rest.listAllAsPage(event.pageIndex, event.pageSize).subscribe((response:any) => {
-      this.pageIndex = event.pageIndex
-      this.pageSize = event.pageSize
-      this.length = response.totalElements
-      this.GPSData = response
-    }, error => console.error(error));
+    if(this.search) {
+      this.rest.listAllByClientLicensePlate(event.pageIndex, event.pageSize, this.search.toUpperCase()).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error))
+    } else {
+      this.rest.listAllAsPage(event.pageIndex, event.pageSize).subscribe((response:any) => {
+        this.pageIndex = event.pageIndex
+        this.pageSize = event.pageSize
+        this.length = response.totalElements
+        this.GPSData = response
+      }, error => console.error(error));
+    }
   }
 
   openTurnOffDialog(_vehicle: any): void {

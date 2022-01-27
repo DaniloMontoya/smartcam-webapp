@@ -1,3 +1,4 @@
+@import '../../../assets/my-theme.scss';
 .map-container {
     background-color: white;
 }
@@ -13,11 +14,12 @@
 
 .ol-popup {
     position: absolute;
-    background-color: white;
+    backdrop-filter: blur(16px) contrast(.8);
+    background-color: rgba(255 255 255 /62%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     padding: 15px;
     border-radius: 10px;
-    border: 1px solid #cccccc;
+    //border: 2px solid #cccccc;
     bottom: 12px;
     left: -50px;
     width: 333px;
@@ -94,8 +96,12 @@ body::-webkit-scrollbar-thumb:active {
 
 .small_mat_button {
     button {
-        width: 54px!important;
+        width: 54px;
+        height: 36px;
         min-width: unset!important;
+        mat-icon {
+            font-size: 24px;
+        }
     }
 }
 
@@ -104,10 +110,14 @@ body::-webkit-scrollbar-thumb:active {
 }
 
 .red-icon {
-    color: red;
+    color: mat-color($my-theme-warn) !important;
 }
 
-mat-card {
+.vehicles-card {
+    z-index: 10;
+    position: absolute;
+    margin: 25px;
+    right: 0;
     backdrop-filter: blur(16px) contrast(.8);
     background-color: rgba(255 255 255 /62%);
 }

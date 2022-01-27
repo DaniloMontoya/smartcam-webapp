@@ -21,10 +21,10 @@ const routes: Routes = [
   { path: 'sos-alert', component: SosAlertComponent },
   { path: 'stats/:id', component: StatsComponent },
   { path: 'streaming/:id', component: StreamingComponent },
-  { path: 'alert-config', component: AlertConfigComponent },
+  //{ path: 'alert-config', component: AlertConfigComponent },
   { path: 'cameras', component: CamerasComponent },
   { path: 'config', component: ConfigComponent},
-  { path: 'video', component: VideoComponent}
+  //{ path: 'video', component: VideoComponent}
 ];
 
 @NgModule({

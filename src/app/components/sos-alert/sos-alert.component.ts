@@ -29,7 +29,7 @@ export class SosAlertComponent implements OnInit {
 
   loadNextPage(event) {
     if(this.search) {
-      this.rest.listAllSosAlertByLicensePlate(event.pageIndex, event.pageSize, this.search).subscribe((response:any) => {
+      this.rest.listAllSosAlertByLicensePlate(event.pageIndex, event.pageSize, this.search.toUpperCase()).subscribe((response:any) => {
         this.pageIndex = event.pageIndex
         this.pageSize = event.pageSize
         this.length = response.totalElements
@@ -47,8 +47,8 @@ export class SosAlertComponent implements OnInit {
 
   onSearchPlate() {
     if(this.search) {
-      this.rest.listAllSosAlertByLicensePlate(0,this.pageSize, this.search).subscribe((response:any)=>{
-        this.sos_alerts = response.content
+      this.rest.listAllSosAlertByLicensePlate(0,this.pageSize, this.search.toUpperCase()).subscribe((response:any)=>{
+        this.sos_alerts = response
         this.length = response.totalElements
       }), error => console.error(error)
     } else {

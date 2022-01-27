@@ -217,7 +217,8 @@ export class StreamingComponent implements OnInit {
   }
 
   setVehicleIcon(GPSDevice: DeviceGps) {
-    let icon_path = `${DEFAULT_ICON_PATH+GPSDevice.vehicle+GPSDevice.ignition}.svg`
+    let icon_path = GPSDevice.ignition === 'On' || GPSDevice.cameraStatus === 'ACTIVE' ? `${DEFAULT_ICON_PATH+GPSDevice.vehicle}On.svg` : `${DEFAULT_ICON_PATH+GPSDevice.vehicle}Off.svg`
+
     let icon = new Style({
       image: new Icon({
         anchor: this.anchor,
