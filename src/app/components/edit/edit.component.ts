@@ -13,7 +13,6 @@ import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
 })
 export class EditComponent implements OnInit {
 
-  public plate
   public search: string
   public GPSData:any
   public length = 100;
@@ -24,10 +23,9 @@ export class EditComponent implements OnInit {
   constructor(public rest: RestService, private _snackBar: MatSnackBar, private _Activatedroute:ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.plate = this._Activatedroute.snapshot.paramMap.get("plate");
-    if(this.plate) {
-      this.search = this.plate
-      this.rest.listAllByClientLicensePlate(this.pageIndex,this.pageSize, this.plate).subscribe((response:any) => {
+    this.search = this._Activatedroute.snapshot.paramMap.get("plate");
+    if(this.search) {
+      this.rest.listAllByClientLicensePlate(this.pageIndex,this.pageSize, this.search).subscribe((response:any) => {
         this.length = response.totalElements
         this.GPSData = response
       }, error => console.error(error))

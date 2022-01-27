@@ -9,7 +9,7 @@
     </mat-form-field>
     <div class="mat-elevation-z8" *ngIf="GPSData">
         <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel *ngFor="let data of GPSData?.content" [expanded]="data.licensePlate === plate">
+            <mat-expansion-panel *ngFor="let data of GPSData?.content" [expanded]="data.licensePlate === search">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{data.licensePlate}}
