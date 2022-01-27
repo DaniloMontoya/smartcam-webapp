@@ -26,6 +26,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.plate = this._Activatedroute.snapshot.paramMap.get("plate");
     if(this.plate) {
+      this.search = this.plate
       this.rest.listAllByClientLicensePlate(this.pageIndex,this.pageSize, this.plate).subscribe((response:any) => {
         this.length = response.totalElements
         this.GPSData = response
