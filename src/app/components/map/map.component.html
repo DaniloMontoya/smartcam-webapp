@@ -22,7 +22,9 @@
         <mat-list>
             <mat-list-item *ngFor="let device of GPSData | filter:search; let i = index" [hidden]="device.licensePlate === 'UNDEFINED'" (mouseover)="isChangedBlock[i] = true" (mouseout)="isChangedBlock[i] = false">
                 <button mat-button (click)="centerViewToDevice(device)" style="width: 100%;position: absolute; text-align: left; margin-left: -25px;">
-                <mat-icon [ngClass]="{'red-icon': device?.ignition === 'Off', 'green-icon': device?.ignition === 'On'}" style="margin-right: 8px;">fiber_manual_record</mat-icon>
+                <mat-icon class="green-icon" *ngIf="device.ignition === 'On' || device.cameraStatus === 'ACTIVE' else deviceIsOff" style="margin-right: 8px;">fiber_manual_record</mat-icon>
+                <ng-template #deviceIsOff><mat-icon class="red-icon" style="margin-right: 8px;">fiber_manual_record</mat-icon></ng-template>
+
                 <mat-icon *ngIf="device.vehicle === 'BIKE'" matSuffix>two_wheeler</mat-icon>
                 <mat-icon *ngIf="device.vehicle !== 'BIKE'" matSuffix>directions_car</mat-icon> {{device.licensePlate}} <mat-icon style="margin-left: 16px;" [hidden]="!isChangedBlock[i]" color="primary" matSuffix>push_pin</mat-icon>
               </button>
@@ -53,7 +55,7 @@
                 <button [hidden]="!path_is_drawn" (click)="removePath()" mat-button>
                   <mat-icon color="warn">clear</mat-icon>
                 </button>
-                <button [routerLink]="['/edit',popDevice?.licensePlate]" mat-button><mat-icon color="primary">edit</mat-icon></button>
+                <button [routerLink]="['/vehicles',popDevice?.licensePlate]" mat-button><mat-icon color="primary">edit</mat-icon></button>
                 <button [routerLink]="['/stats',popDevice?.imei]" mat-button><mat-icon color="primary">bar_chart</mat-icon></button>
                 <button [hidden]="popDevice?.ignition === 'Off'" (click)="openTurnOffDialog({vehicle: popDevice})" mat-button><mat-icon color="primary">power_settings_new</mat-icon></button>
                 <button [hidden]="popDevice?.ignition === 'On'" (click)="openUnlockDialog({vehicle: popDevice})" mat-button><mat-icon class="warn-color">power_settings_new</mat-icon></button>

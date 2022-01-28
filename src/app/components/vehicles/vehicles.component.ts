@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DeviceGps } from 'src/app/models/devicegps.model';
 import { RestService } from 'src/app/services/rest.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  selector: 'app-vehicles',
+  templateUrl: './vehicles.component.html',
+  styleUrls: ['./vehicles.component.scss']
 })
-export class EditComponent implements OnInit {
+export class VehiclesComponent implements OnInit {
 
   public search: string
   public GPSData:any
@@ -20,7 +20,9 @@ export class EditComponent implements OnInit {
   public pageSize = 13;
   public pageSizeOptions: number[] = [13, 30, 50, 100];
 
-  constructor(public rest: RestService, private _snackBar: MatSnackBar, private _Activatedroute:ActivatedRoute, public dialog: MatDialog) { }
+  displayedColumns: string[] = ['id', 'licensePlate', 'imeiCamera', 'vehicle', 'edit'];
+
+  constructor(public rest: RestService, private _Activatedroute:ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.search = this._Activatedroute.snapshot.paramMap.get("plate");
@@ -28,6 +30,7 @@ export class EditComponent implements OnInit {
       this.rest.listAllByClientLicensePlate(this.pageIndex,this.pageSize, this.search).subscribe((response:any) => {
         this.length = response.totalElements
         this.GPSData = response
+        this.openEditModal(this.GPSData.content[0])
       }, error => console.error(error))
     } else {
       this.rest.listAllAsPage(this.pageIndex,this.pageSize).subscribe((response:any) => {
@@ -35,18 +38,6 @@ export class EditComponent implements OnInit {
         this.GPSData = response
       }, error => console.error(error));
     }
-  }
-
-  updateDevice(device:DeviceGps) {
-    this.rest.doUpdateVehicle(device).subscribe((response)=>{
-      if(response) {
-        this.rest.cameraToVehicle(device.imeiCamera, device.imei).subscribe()
-        this._snackBar.open(`El dispositivo de ${device.vehicle} ${device.imei}, ha sido actualizado!`)
-        setTimeout(() => {
-          this._snackBar.dismiss()
-        }, 2000);
-      }
-    }), error => this._snackBar.open(error.message)
   }
 
   searchByPlate() {
@@ -79,6 +70,31 @@ export class EditComponent implements OnInit {
         this.GPSData = response
       }, error => console.error(error));
     }
+  }
+
+  openEditModal(vehicle:any) {
+    this.dialog.open(EditModal, { data: vehicle });
+  }
+
+}
+
+@Component({
+  selector: 'edit-modal',
+  templateUrl: 'edit.modal.html',
+})
+export class EditModal {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<EditModal>, private rest: RestService, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
+
+  updateDevice(device:DeviceGps) {
+    this.rest.doUpdateVehicle(device).subscribe((response)=>{
+      if(response) {
+        this.rest.cameraToVehicle(device.imeiCamera, device.imei).subscribe()
+        this._snackBar.open(`El dispositivo de ${device.vehicle} ${device.imei}, ha sido actualizado!`)
+        setTimeout(() => {
+          this._snackBar.dismiss()
+        }, 2000);
+      }
+    }), error => this._snackBar.open(error.message)
   }
 
   openTurnOffDialog(_vehicle: any): void {

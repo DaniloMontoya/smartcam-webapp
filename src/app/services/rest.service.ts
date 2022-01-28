@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Client } from 'src/environments/client.prod';
+import { Client } from 'src/app/models/client.model';
 import { DeviceGps } from '../models/devicegps.model';
 
 @Injectable({

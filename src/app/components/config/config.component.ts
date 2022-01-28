@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RestService } from 'src/app/services/rest.service';
-import { Client } from 'src/environments/client.prod';
+import { Client } from 'src/app/models/client.model';
 
 @Component({
   selector: 'app-config',

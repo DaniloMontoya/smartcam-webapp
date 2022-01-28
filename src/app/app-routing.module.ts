@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MapComponent } from './components/map/map.component';
-import { EditComponent } from './components/edit/edit.component'
+import { VehiclesComponent } from './components/vehicles/vehicles.component'
 import { SpeedAlertComponent } from './components/speed-alert/speed-alert.component';
 import { SosAlertComponent } from './components/sos-alert/sos-alert.component';
 import { StatsComponent } from './components/stats/stats.component'
@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
   { path: 'map', component: MapComponent },
   { path: 'map/:id', component: MapComponent },
-  { path: 'edit', component: EditComponent },
-  { path: 'edit/:plate', component: EditComponent },
+  { path: 'vehicles', component: VehiclesComponent },
+  { path: 'vehicles/:plate', component: VehiclesComponent },
   { path: 'speed-alert', component: SpeedAlertComponent },
   { path: 'sos-alert', component: SosAlertComponent },
   { path: 'stats/:id', component: StatsComponent },

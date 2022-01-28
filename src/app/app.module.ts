@@ -10,7 +10,7 @@ import { MaterialModule } from './material.module';
 import { MapComponent } from './components/map/map.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { EditComponent } from './components/edit/edit.component';
+import { VehiclesComponent, EditModal } from './components/vehicles/vehicles.component';
 import { SpeedAlertComponent } from './components/speed-alert/speed-alert.component';
 import { SosAlertComponent } from './components/sos-alert/sos-alert.component';
 import { RoutesModal, StatsComponent } from './components/stats/stats.component';
@@ -30,7 +30,7 @@ import { VideoComponent } from './components/video/video.component';
     AppComponent,
     LoginComponent,
     MapComponent,
-    EditComponent,
+    VehiclesComponent,
     SpeedAlertComponent,
     SosAlertComponent,
     ConfirmDialog,
@@ -44,7 +44,8 @@ import { VideoComponent } from './components/video/video.component';
     CamerasComponent,
     RoutesModal,
     ConfigComponent,
-    VideoComponent
+    VideoComponent,
+    EditModal
   ],
   imports: [
     FormsModule,

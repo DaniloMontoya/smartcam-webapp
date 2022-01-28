@@ -14,6 +14,10 @@ export class TranslatePipe implements PipeTransform {
             return 'Activo'
           case 'INACTIVE':
             return 'Inactivo'
+          case 'UNDEFINED':
+            return 'Sin Definir'
+          default :
+            return 'No específicado'
         }
     }
 }

@@ -90,7 +90,6 @@ export class StreamingComponent implements OnInit {
   private _updateWebSocketResponse (response:any) {
     this.GPSData.forEach((data)=>{
       if(data.imei === response.id) {
-        let lastIgnition = data.ignition
         data.alert = response.alert
         //data.crs = response.crs
         //data.imei = response.id
@@ -105,7 +104,7 @@ export class StreamingComponent implements OnInit {
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
-            if(lastIgnition !== data.ignition) mark.setStyle(this.setVehicleIcon(data))
+            mark.setStyle(this.setVehicleIcon(data))
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
             this.centerViewToDevice(data)
           }

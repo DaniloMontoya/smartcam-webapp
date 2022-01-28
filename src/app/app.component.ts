@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Client } from 'src/environments/client.prod';
+import { Client } from 'src/app/models/client.model';
 import { AuthService } from './services/auth.service';
 import { RestService } from './services/rest.service';
 
@@ -19,7 +19,7 @@ export class AppComponent {
 
   navigations = [
     {icon: 'location_on', name: 'Mapa', route: '/map'},
-    {icon: 'directions_car', name: 'Vehículos', route: '/edit'},
+    {icon: 'directions_car', name: 'Vehículos', route: '/vehicles'},
     {icon: 'video_library', name: 'Grabaciones', route: '/video'},
     {icon: 'video_camera_back', name: 'Cámaras disponibles', route: '/cameras'},
     {icon: 'taxi_alert', name: 'Alertas de velocidad', route: '/speed-alert'},

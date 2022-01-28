@@ -93,7 +93,6 @@ export class MapComponent implements OnInit, OnDestroy {
   private _updateWebSocketResponse (response:any) {
     this.GPSData.forEach((data)=>{
       if(data.imei === response.id) {
-        let lastIgnition = data.ignition
         data.alert = response.alert
         //data.crs = response.crs
         //data.imei = response.id
@@ -112,10 +111,8 @@ export class MapComponent implements OnInit, OnDestroy {
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
-            if(lastIgnition !== data.ignition) {
-              mark.setStyle(this.setVehicleIcon(data))
-              this.reorderGPSDataByIgnition()
-            }
+            mark.setStyle(this.setVehicleIcon(data))
+            this.reorderGPSDataByIgnition()
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
             if(this.selectedDevice && data.imei === this.selectedDevice.imei)
               this.centerViewToDevice(this.selectedDevice)

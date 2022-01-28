@@ -1,0 +1,64 @@
+<style>
+    .example-action-buttons {
+        padding-bottom: 20px;
+    }
+
+    .example-headers-align .mat-form-field+.mat-form-field {
+        margin-left: 8px;
+    }
+
+    .example-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+    }
+
+    .example-radio-button {
+        margin: 5px;
+    }
+
+    mat-form-field {
+        width: 100%;
+    }
+</style>
+<h1 class="primary-color" style="font-size: 28px;">
+    <mat-icon style="margin-right: 8px; font-size: 38px;">edit</mat-icon>
+    Editar {{(data.vehicle) ? (data.vehicle | translate) : "No Disponible"}} {{data.licensePlate}}
+</h1>
+<mat-form-field style="margin-top: 8px;">
+    <mat-label>Id</mat-label>
+    <input [(ngModel)]="data.imei" matInput>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Placa/Matricula</mat-label>
+    <input [(ngModel)]="data.licensePlate" matInput>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Imei de cámara asociada</mat-label>
+    <input [(ngModel)]="data.imeiCamera" matInput>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Imei de GPS</mat-label>
+    <input matInput>
+</mat-form-field>
+<br>
+<label>Tipo de vehiculo</label>
+<br>
+<mat-radio-group class="example-radio-group" aria-label="Select an option" [(ngModel)]="data.vehicle" style="margin-left: 10px;">
+    <mat-radio-button color="primary" class="example-radio-button" value="CAR">
+        Carro
+    </mat-radio-button>
+    <mat-radio-button color="primary" class="example-radio-button" value="BIKE">
+        Moto
+    </mat-radio-button>
+</mat-radio-group>
+<mat-action-row style="position: relative; right: 0;">
+    <button [hidden]="data.ignition === 'On'" mat-raised-button (click)="openUnlockDialog(data)">Desbloquear Vechiculo</button>
+    <button [hidden]="data.ignition === 'Off'" mat-raised-button (click)="openTurnOffDialog(data)">Apagar Vechiculo</button>
+    <button mat-raised-button color="primary" (click)="updateDevice(data)" style="margin-left: 8px;">Guardar</button>
+</mat-action-row>
+<br><br>
+<i style="font-size: 12px;">Última actualización: {{data.lastUpdate | date:'medium'}}</i>
