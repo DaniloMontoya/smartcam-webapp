@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialog } from 'src/app/shared/confirm-dialog.component';
+import { TranslatePipe } from '../../pipes/translate.pipe'
 
 @Component({
   selector: 'app-vehicles',
@@ -83,18 +84,26 @@ export class VehiclesComponent implements OnInit {
   templateUrl: 'edit.modal.html',
 })
 export class EditModal {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<EditModal>, private rest: RestService, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<EditModal>,
+    private rest: RestService,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
 
   updateDevice(device:DeviceGps) {
-    this.rest.doUpdateVehicle(device).subscribe((response)=>{
-      if(response) {
+    this.rest.doUpdateVehicle(device).subscribe({
+      next: response => {
         this.rest.cameraToVehicle(device.imeiCamera, device.imei).subscribe()
-        this._snackBar.open(`El dispositivo de ${device.vehicle} ${device.imei}, ha sido actualizado!`)
-        setTimeout(() => {
-          this._snackBar.dismiss()
-        }, 2000);
+        this.dialogRef.close()
+        this._snackBar.open(`El dispositivo ${new TranslatePipe().transform(device.vehicle)} ${device.imei}, ha sido actualizado!`)
+        setTimeout(() => { this._snackBar.dismiss()}, 2000);
+      }, error : error => {
+        this.dialogRef.close()
+        this._snackBar.open(error.message)
+        setTimeout(() => { this._snackBar.dismiss()}, 2000);
       }
-    }), error => this._snackBar.open(error.message)
+    })
   }
 
   openTurnOffDialog(_vehicle: any): void {

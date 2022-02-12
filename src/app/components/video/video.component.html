@@ -1,1 +1,38 @@
 <h1 class="title">Reproducción De Vídeo</h1>
+<div class="container-fluid" style="margin-top: 10px;">
+    <div class="row" *ngIf="showVideo else showAll">
+        <div class="col-sm-9">
+            <mat-card class="video-player">
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <mat-card-title>Shiba Inu</mat-card-title>
+                    <mat-card-subtitle>Small</mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-3">
+            <mat-card class="video-card" *ngFor="let item of videos" (click)="playVideo()">
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <mat-card-title>Shiba Inu</mat-card-title>
+                    <mat-card-subtitle>Small</mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+    <ng-template #showAll>
+        <div class="row">
+            <div class="col" *ngFor="let item of videos">
+                <mat-card class="video-card" (click)="playVideo()">
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    <mat-card-content>
+                        <mat-card-title>Shiba Inu</mat-card-title>
+                        <mat-card-subtitle>Small</mat-card-subtitle>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </ng-template>
+</div>

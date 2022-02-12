@@ -1,0 +1,21 @@
+.video-card {
+    width: 333px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    img {
+        height: 185px;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+.video-player {
+    width: 100%;
+    margin-bottom: 16px;
+    img {
+        cursor: pointer;
+        max-height: 75vh;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
