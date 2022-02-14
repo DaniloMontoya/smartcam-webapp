@@ -27,5 +27,5 @@ export class AppComponent {
     {icon: 'warning_amber', name: 'Control de alertas', route: '/alert-config'},
     {icon: 'settings', name: 'Configuración', route: '/config'}]
 
-  constructor(public auth: AuthService, private rest:RestService) { this.rest.getClient().subscribe((res: Client)=> this.client = res) }
+  constructor(private rest:RestService) { this.rest.getClient().subscribe((res: Client)=> this.client = res) }
 }

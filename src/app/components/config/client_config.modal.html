@@ -1,0 +1,49 @@
+<h1 [hidden]="client === undefined" class="primary-color" style="font-size: 38px;">Configuración del cliente</h1>
+<div class="container-fluid" style="margin-top: 10px">
+    <mat-spinner [hidden]="client !== undefined" color="primary" style="margin: auto"></mat-spinner>
+    <div *ngIf="client" style="width: 21vw;">
+        <div style="padding: 16px">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field style="margin-left: 10px; width: 100%;">
+                        <mat-label>Id</mat-label>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <input [(ngModel)]="client.id" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field style="margin-left: 10px; width: 100%;">
+                        <mat-label>Nombre</mat-label>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <input [(ngModel)]="client.name" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field style="margin-left: 10px; width: 100%;">
+                        <mat-label>Dirección</mat-label>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <input [(ngModel)]="client.address" matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field style="margin-left: 10px; width: 100%;">
+                        <mat-label>Teléfono</mat-label>
+                        <mat-icon matSuffix>phone</mat-icon>
+                        <input [(ngModel)]="client.phone" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field style="margin-left: 10px; width: 100%;">
+                        <mat-label>Teléfono Celular</mat-label>
+                        <mat-icon matSuffix>smartphone</mat-icon>
+                        <input [(ngModel)]="client.cellphone" matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" style="margin-right: 16px" (click)="updateClient()">Guardar</button>
+        </div>
+    </div>
+</div>

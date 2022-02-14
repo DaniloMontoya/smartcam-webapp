@@ -22,7 +22,7 @@ import { ConfirmDialog } from './shared/confirm-dialog.component';
 import { AlertConfigComponent } from './components/alert-config/alert-config.component';
 import { CamerasComponent, StreamModal } from './components/cameras/cameras.component';
 import { SafePipe } from './pipes/safe.pipe';
-import { ConfigComponent } from './components/config/config.component';
+import { AddModal, ClientConfigModal, ConfigComponent, DeleteUserModal, EditUserModal } from './components/config/config.component';
 import { VideoComponent } from './components/video/video.component';
 
 @NgModule({
@@ -45,7 +45,11 @@ import { VideoComponent } from './components/video/video.component';
     RoutesModal,
     ConfigComponent,
     VideoComponent,
-    EditModal
+    EditModal,
+    ClientConfigModal,
+    AddModal,
+    EditUserModal,
+    DeleteUserModal
   ],
   imports: [
     FormsModule,
@@ -61,7 +65,12 @@ import { VideoComponent } from './components/video/video.component';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    ConfirmDialog
+    ConfirmDialog,
+    EditModal,
+    ClientConfigModal,
+    AddModal,
+    EditUserModal,
+    DeleteUserModal
   ],
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
-<app-login *ngIf="!auth.isLogged"></app-login>
-<mat-sidenav-container *ngIf="auth.isLogged" autosize>
+<!--app-login *ngIf="!auth.isLogged"></app-login-->
+<mat-sidenav-container autosize>
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
             <mat-list-item>
@@ -34,7 +34,7 @@
                 <mat-card-subtitle>{{client?.name | titlecase}}</mat-card-subtitle>
                 <mat-card-content class="example-button-row">
                     <button mat-raised-button [routerLink]="['/config']">Editar</button>
-                    <button mat-raised-button color="primary" (click)="auth.logout()" style="margin-left: 10px;">Cerrar Sesión</button>
+                    <button mat-raised-button color="primary" style="margin-left: 10px;">Cerrar Sesión</button>
                 </mat-card-content>
             </mat-card>
         </mde-popover>
