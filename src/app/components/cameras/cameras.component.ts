@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import { Streaming } from 'src/app/models/streaming.model';
 import { RestService } from 'src/app/services/rest.service';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 
@@ -82,9 +83,9 @@ export class StreamModal {
   url:string
   response:any
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService) {
-    this.rest.askStreamingCamera(data.imei).subscribe((res:any)=>{
+    this.rest.askStreamingCamera(data.imei).subscribe((res:Streaming)=>{
       this.response = res
-      this.url = `${DOMAIN_URL}/video.html?imei=${data.imei}`
+      this.url = `${DOMAIN_URL}/video.html?imei=${data.imei}&access_token=${res.token}`
     }), error => {
       this.dialogRef.close()
     };

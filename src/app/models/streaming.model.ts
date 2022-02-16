@@ -7,4 +7,5 @@ export class Streaming {
   urlStreamBack: string
   urlStreamFront: string
   viewers: number
+  token: string
 }

@@ -134,7 +134,7 @@ export class StreamingComponent implements OnInit {
     this.map.getView().setZoom(16)
     this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
-      this.urlStreaming = `${DOMAIN_URL}/video.html?imei=${device.imeiCamera}`
+      this.urlStreaming = `${DOMAIN_URL}/video.html?imei=${device.imeiCamera}&access_token=${response.token}`
     })
   }
 
