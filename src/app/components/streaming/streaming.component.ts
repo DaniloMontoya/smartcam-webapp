@@ -41,6 +41,7 @@ export class StreamingComponent implements OnInit {
   public selectedDevice: DeviceGps
   public minimize_carlist: boolean = false
   public id
+  public carro: DeviceGps
 
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
@@ -66,6 +67,7 @@ export class StreamingComponent implements OnInit {
 
   public connect_callback = () => {
     this._subcribeTopic('/topic/gps');
+    this._subcribeTopic('/topic/event')
   }
 
   public error_callback = (error) => {
@@ -81,13 +83,16 @@ export class StreamingComponent implements OnInit {
       let model: any = JSON.parse(message.body);
         switch (topic) {
           case '/topic/gps':
-            this._updateWebSocketResponse(model);
+            this.updateGPSData(model);
+            break;
+          case '/topic/event':
+            this.checkEvents(model);
             break;
         }
     });
   }
 
-  private _updateWebSocketResponse (response:any) {
+  private updateGPSData(response:any) {
     this.GPSData.forEach((data)=>{
       if(data.imei === response.id) {
         data.alert = response.alert
@@ -119,6 +124,7 @@ export class StreamingComponent implements OnInit {
       if(this.GPSData) {
         this.GPSData.forEach((data) => {
           if(this.id === data.imei) {
+            this.carro = data
             this.GPSMarks = this.createGPSMarkers([data]);
             this.addMarksInMap(this.GPSMarks, 'gpsMarks');
             this.centerViewToDevice(data)
@@ -128,13 +134,17 @@ export class StreamingComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  private checkEvents(response:any) {
+    console.log(response)
+  }
+
   public centerViewToDevice(device: DeviceGps) {
     this.selectedDevice = device
     this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]))
     this.map.getView().setZoom(16)
     this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
-      this.urlStreaming = `${DOMAIN_URL}/video.html?imei=${device.imeiCamera}&access_token=${response.token}`
+      this.urlStreaming = `${DOMAIN_URL}:8091/streaming/video?imei=${device.imeiCamera}&access_token=${response.token}`
     })
   }
 

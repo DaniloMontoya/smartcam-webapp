@@ -24,6 +24,7 @@ import { CamerasComponent, StreamModal } from './components/cameras/cameras.comp
 import { SafePipe } from './pipes/safe.pipe';
 import { AddModal, ClientConfigModal, ConfigComponent, DeleteUserModal, EditUserModal } from './components/config/config.component';
 import { VideoComponent } from './components/video/video.component';
+import { EventsComponent } from './components/events/events.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { VideoComponent } from './components/video/video.component';
     ClientConfigModal,
     AddModal,
     EditUserModal,
-    DeleteUserModal
+    DeleteUserModal,
+    EventsComponent
   ],
   imports: [
     FormsModule,

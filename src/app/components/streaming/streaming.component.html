@@ -11,40 +11,22 @@
             <ng-template #failedStream>
                 <h3 class="warn-color center">El Streaming ha fallado en hacer conexión...</h3>
             </ng-template>
+
         </div>
         <div class="col-md-4">
             <div id="minimap" class="map"></div>
+            <mat-card style="margin-top: 16px;">
+                <mat-card-content style="font-size: 21px;">
+                    <Label><b class="primary-color">Placa</b><br> {{carro.licensePlate}}</Label>
+                    <br>
+                    <Label><b class="primary-color">Vehículo</b><br> {{carro.vehicle | translate}}</Label>
+                    <br>
+                    <Label><b class="primary-color">Cámara</b><br> {{carro.cameraStatus | translate}}</Label>
+                    <br>
+                    <Label><b class="primary-color">Imei Cámara</b><br> {{carro.imeiCamera}}</Label>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
-
-    <table mat-table [dataSource]="GPSData | filter:id" style="margin-top: 16px; padding: 16px;">
-        <ng-container matColumnDef="imei">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.imei}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="vehiculo">
-            <th mat-header-cell *matHeaderCellDef> Vehículo </th>
-            <td mat-cell *matCellDef="let element"> {{element.vehicle | translate}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="camara">
-            <th mat-header-cell *matHeaderCellDef> Cámara </th>
-            <td mat-cell *matCellDef="let element"> {{element.cameraStatus | translate}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="imeiCamara">
-            <th mat-header-cell *matHeaderCellDef> Imei Cámara </th>
-            <td mat-cell *matCellDef="let element"> {{element.imeiCamera}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="placa">
-            <th mat-header-cell *matHeaderCellDef> Placa </th>
-            <td mat-cell *matCellDef="let element"> {{element.licensePlate}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
 
 </div>

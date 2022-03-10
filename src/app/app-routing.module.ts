@@ -10,6 +10,7 @@ import { AlertConfigComponent } from './components/alert-config/alert-config.com
 import { CamerasComponent } from './components/cameras/cameras.component';
 import { ConfigComponent } from './components/config/config.component';
 import { VideoComponent } from './components/video/video.component';
+import { EventsComponent } from './components/events/events.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
@@ -24,7 +25,8 @@ const routes: Routes = [
   //{ path: 'alert-config', component: AlertConfigComponent },
   { path: 'cameras', component: CamerasComponent },
   { path: 'config', component: ConfigComponent},
-  //{ path: 'video', component: VideoComponent}
+  //{ path: 'video', component: VideoComponent},
+  { path: 'events', component: EventsComponent}
 ];
 
 @NgModule({

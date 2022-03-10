@@ -85,7 +85,7 @@ export class StreamModal {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService) {
     this.rest.askStreamingCamera(data.imei).subscribe((res:Streaming)=>{
       this.response = res
-      this.url = `${DOMAIN_URL}/video.html?imei=${data.imei}&access_token=${res.token}`
+      this.url = `${DOMAIN_URL}:8091/streaming/video?imei=${data.imei}&access_token=${res.token}`
     }), error => {
       this.dialogRef.close()
     };
