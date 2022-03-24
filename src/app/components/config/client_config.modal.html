@@ -42,6 +42,17 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="row">
+                <input type="file" style="display: none" (change)="uploadClientImage($event)" #fileUpload>
+                <div class="file-upload">
+
+                    {{fileName || "Sin imágen por subir aún."}}
+
+                    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                     <mat-icon>attach_file</mat-icon>
+                 </button>
+                </div>
+            </div>
             <br>
             <button mat-raised-button color="primary" style="margin-right: 16px" (click)="updateClient()">Guardar</button>
         </div>

@@ -53,7 +53,7 @@
                 </div>
             </mat-card>
             <h1 class="subtitle" style="margin-top: 16px;">Rutas Recorridas</h1>
-            <mat-spinner [hidden]="routeList_table !== undefined" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
+            <mat-spinner *ngIf="!routeList_table" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
             <div class="mat-elevation-z2" *ngIf="routeList_table">
                 <table mat-table [dataSource]="routeList_table" style="padding: 16px;">
                     <ng-container matColumnDef="id">
@@ -85,7 +85,7 @@
         </div>
         <div class="col-sm-4">
             <h1 class="subtitle">Kilometros Recorridos</h1>
-            <mat-spinner [hidden]="reportList !== undefined" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
+            <mat-spinner *ngIf="!reportList" color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
             <div class="mat-elevation-z2" *ngIf="reportList">
                 <table mat-table [dataSource]="reportList" style="padding: 16px;">
                     <ng-container matColumnDef="date">

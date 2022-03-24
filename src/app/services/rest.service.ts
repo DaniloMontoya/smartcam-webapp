@@ -94,4 +94,16 @@ export class RestService {
     return this.http.get('rest/client/center')
   }
 
+  getAllDMS(page, size) {
+    return this.http.get(`rest/dms/${page}/${size}`)
+  }
+
+  getDMSByImei(page, size, imei) {
+    return this.http.get(`rest/dms/${imei}/${page}/${size}`)
+  }
+
+  uploadClientImage(file) {
+    return this.http.post(`/rest/client/uploadFile`, file)
+  }
+
 }

@@ -88,6 +88,7 @@ export class EditUserModal {
 export class ClientConfigModal implements OnInit {
 
   client: Client
+  fileName: string
 
   constructor(
     public dialogRef: MatDialogRef<ClientConfigModal>,
@@ -115,6 +116,30 @@ export class ClientConfigModal implements OnInit {
             console.error('There was an error!', error.message);
         }
       })
+    }
+
+    async uploadClientImage(event) {
+      const file:File = event.target.files[0];
+        if (file) {
+          this.fileName = file.name;
+          const formData = new FormData();
+          formData.append("thumbnail", file);
+          await this.rest.uploadClientImage(formData).subscribe({
+            next: data => {
+                let snack = this.snackBar.open(`La imágen ${this.fileName} se ha terminado de subir`)
+                setTimeout(() => {
+                  snack.dismiss()
+                }, 1000);
+            },
+            error: error => {
+              let snack = this.snackBar.open('La subida ha fallado!!')
+              setTimeout(() => {
+                snack.dismiss()
+              }, 1000);
+                console.error('There was an error!', error.message);
+            }
+          })
+        }
     }
 
 }
