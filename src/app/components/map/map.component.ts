@@ -51,9 +51,15 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
     this.map = this.createOpenLayerMap();
+<<<<<<< HEAD
     this.loadGPSData();
     this.initWebsocket()
     this.makeCursorToDrag()
+=======
+    this.makeCursorToDrag()
+    this.loadGPSData();
+    this.initWebsocket()
+>>>>>>> origin/master
   }
 
   ngOnDestroy() {
@@ -62,6 +68,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   initWebsocket(){
+<<<<<<< HEAD
     this.stompClient = Stomp.over(() => new SockJS(`${DOMAIN_URL}/gps-websocket`));
     this.stompClient.connect({}, this.connect_callback, this.error_callback)
     this.stompClient.reconnect_delay = 2500;
@@ -87,6 +94,30 @@ export class MapComponent implements OnInit, OnDestroy {
             this._updateWebSocketResponse(model);
             break;
         }
+=======
+    let ws:WebSocket = new SockJS(`${DOMAIN_URL}/gps-websocket`);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    this.stompClient.connect({}, (frame:any) => {
+      if(!that.stompClient){
+        return;
+      }
+
+      this._subcribeTopic('/topic/gps');
+    });
+  }
+
+  private _subcribeTopic(topic: string) {
+    if(!this.stompClient){
+      console.error("Error to configure mailbot websocket");
+      return;
+    }
+    this.stompClient.subscribe(topic, (message:any) => {
+      if (message.body) {
+        let gpsModel: any = JSON.parse(message.body);
+        this._updateWebSocketResponse(gpsModel);
+      }
+>>>>>>> origin/master
     });
   }
 
@@ -94,6 +125,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.GPSData.forEach((data)=>{
       if(data.imei === response.id) {
         data.alert = response.alert
+<<<<<<< HEAD
         //data.crs = response.crs
         //data.imei = response.id
         data.ignition = response.ignition
@@ -107,23 +139,47 @@ export class MapComponent implements OnInit, OnDestroy {
 
         if(response.alert || response.alert.length !== 0 )
           this.showAlertVehicle(response.alert, data.imei)
+=======
+        data.crs = response.crs
+        data.imei = response.id
+        data.ignition = response.ignition
+        data.latitude = response.latitude
+        data.licensePlate = response.licensePlate
+        data.longitude = response.longitude
+        data.spd = response.spd
+
+        this.showAlertVehicle(response, data.imei)
+>>>>>>> origin/master
 
         this.GPSMarks.forEach((mark)=>{
           let mark_id = mark.get("name")
           if(mark_id === data.imei) {
             mark.setStyle(this.setVehicleIcon(data))
+<<<<<<< HEAD
             this.reorderGPSDataByIgnition()
+=======
+>>>>>>> origin/master
             mark.getGeometry().setCoordinates(fromLonLat([data.longitude, data.latitude]))
             if(this.selectedDevice && data.imei === this.selectedDevice.imei)
               this.centerViewToDevice(this.selectedDevice)
           }
         })
 
+<<<<<<< HEAD
         if(this.popDevice?.imei === response.id)
           this.popDevice = data
 
         if(this.path_is_drawn)
           this.addPathToData(data.activeIdRoute, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
+=======
+        if(this.path_is_drawn) {
+          this.pathMarks.forEach((mark)=>{
+            let mark_id = mark.get("name")
+            if(mark_id === data.activeIdRoute)
+              this.addPathToData(mark_id, {created: data.created, crs: data.crs, latitude: data.latitude, longitude: data.longitude, spd: data.spd})
+          })
+        }
+>>>>>>> origin/master
       }
     })
   }
@@ -135,25 +191,37 @@ export class MapComponent implements OnInit, OnDestroy {
         this.GPSMarks = this.createGPSMarkers(this.GPSData);
         this.addMarksInMap(this.GPSMarks, 'gpsMarks');
         this.initPoupEvent(this.map);
+<<<<<<< HEAD
         this.reorderGPSDataByIgnition()
+=======
+>>>>>>> origin/master
         if(this.id) {
           this.GPSData.forEach((data) => {
             if(this.id === data.imei)
               this.centerViewToDevice(data)
           })
+<<<<<<< HEAD
         } else {
           this.rest.getClientPosition().subscribe((res:any)=>{
             this.map.getView().setCenter(fromLonLat([res.longitude, res.latitude]));
           })
+=======
+>>>>>>> origin/master
         }
       }
     }, error => console.error(error));
   }
 
+<<<<<<< HEAD
   private showAlertVehicle(alert: string, imei:string) {
     //if(alert !== '00;Not Message;00')
     if(alert === '42;Alert is sent when the device turn on Panic Button(Input);')
       this.snackBar.showNotification(alert, 'Revisar', imei, new Date())
+=======
+  private showAlertVehicle(response: any, imei:string) {
+    if(response.alert !== '00;Not Message;00')
+      this.snackBar.showNotification(response.alert, 'Revisar', imei, new Date())
+>>>>>>> origin/master
   }
 
   public removePath() {
@@ -162,10 +230,13 @@ export class MapComponent implements OnInit, OnDestroy {
     this.path_is_drawn = false
   }
 
+<<<<<<< HEAD
   public removeMarks() {
     this.removeLayers("gpsMarks")
   }
 
+=======
+>>>>>>> origin/master
   public loadPathData(pathId){
     this.removePath()
     this.rest.listAllPositionByRoute(pathId).subscribe((response:Array<LatLon>) => {
@@ -201,14 +272,18 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   public centerViewToDevice(device: DeviceGps) {
+<<<<<<< HEAD
     this.removeMarks()
     this.GPSMarks = this.createGPSMarkers([device]);
     this.addMarksInMap(this.GPSMarks, 'gpsMarks');
+=======
+>>>>>>> origin/master
     this.selectedDevice = device
     this.map.getView().setCenter(fromLonLat([device.longitude, device.latitude]));
     this.map.getView().setZoom(16);
   }
 
+<<<<<<< HEAD
   public removeSelected() {
     this.removeMarks()
     this.selectedDevice=null
@@ -216,6 +291,8 @@ export class MapComponent implements OnInit, OnDestroy {
     this.addMarksInMap(this.GPSMarks, 'gpsMarks');
   }
 
+=======
+>>>>>>> origin/master
   private createGPSMarkers(GPSData:Array<DeviceGps>):Array<Feature<any>> {
     if (!GPSData) return
     let GPSMarks:Array<Feature<any>> = [];
@@ -275,6 +352,7 @@ export class MapComponent implements OnInit, OnDestroy {
     return openLayerMap;
   }
 
+<<<<<<< HEAD
   private reorderGPSDataByIgnition() {
     this.GPSData.sort((first) => {
       if(first.ignition === 'On') { return -1; }
@@ -283,6 +361,8 @@ export class MapComponent implements OnInit, OnDestroy {
     })
   }
 
+=======
+>>>>>>> origin/master
   private addLinesInMap(poinpathData:Array<LatLon>) {
     let featuresList: Feature<any>[] = []
     for (let i = 0; i < poinpathData.length-1; i++) {
@@ -307,9 +387,31 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private makeCursorToDrag() {
     this.map.on("pointermove", (evt) => {
+<<<<<<< HEAD
       var hit = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => { return true; });
       this.map.getTargetElement().style.cursor = hit ? 'pointer' : ''
   });
+=======
+      var hit = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+          return true;
+      });
+      if (hit) {
+          this.map.getTargetElement().style.cursor = 'pointer';
+      } else {
+          this.map.getTargetElement().style.cursor = '';
+      }
+  });
+    /**
+    this.map.getViewport().style.cursor = "-webkit-grab";
+    this.map.on('pointerdrag', (evt) => {
+      this.map.getViewport().style.cursor = "-webkit-grabbing";
+    });
+
+    this.map.on('pointermove', (evt) => {
+      this.map.getViewport().style.cursor = "-webkit-grab";
+    });
+    */
+>>>>>>> origin/master
   }
 
   private createGPSMark(GPSDevice: DeviceGps): Feature<any>{
@@ -325,7 +427,11 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   setVehicleIcon(GPSDevice: DeviceGps) {
+<<<<<<< HEAD
     let icon_path = GPSDevice.ignition === 'On' || GPSDevice.cameraStatus === 'ACTIVE' ? `${DEFAULT_ICON_PATH+GPSDevice.vehicle}On.svg` : `${DEFAULT_ICON_PATH+GPSDevice.vehicle}Off.svg`
+=======
+    let icon_path = `${DEFAULT_ICON_PATH+GPSDevice.vehicle+GPSDevice.ignition}.svg`
+>>>>>>> origin/master
     let icon = new Style({
       image: new Icon({
         anchor: this.anchor,
@@ -336,7 +442,11 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private createPathMark(path: LatLon, path_id): Feature<any>{
+<<<<<<< HEAD
     let icon_path = `${DEFAULT_ICON_PATH}track_move.svg`
+=======
+    let icon_path = path.spd > 0 ? `${DEFAULT_ICON_PATH}track_move.svg` : `${DEFAULT_ICON_PATH}track_stopped.svg`
+>>>>>>> origin/master
 
     let marker = new Feature({
       geometry: new Point(fromLonLat([path.longitude, path.latitude])),
@@ -358,6 +468,13 @@ export class MapComponent implements OnInit, OnDestroy {
 
     let container: HTMLElement = document.getElementById('popup');
     container.hidden = false;
+<<<<<<< HEAD
+=======
+    let plate: HTMLElement = document.getElementById('plate');
+    let spd: HTMLElement = document.getElementById('spd');
+    let longitude: HTMLElement = document.getElementById('longitude');
+    let latitude: HTMLElement = document.getElementById('latitude');
+>>>>>>> origin/master
 
     var closer = document.getElementById('popup-closer');
     let overlay: Overlay = this.createOverlay(container);
@@ -368,16 +485,35 @@ export class MapComponent implements OnInit, OnDestroy {
     //click Event
     map.on('singleclick', (event) => {
       this.hidePoup(closer, overlay);
+<<<<<<< HEAD
       map.forEachFeatureAtPixel(event.pixel,(feature, layer) => {
         this.removePath()
         let car_imei = feature.get("name")
         this.GPSData.forEach((element) => { if(element.imei === car_imei) this.popDevice = element});
         let coordinate = event.coordinate;
+=======
+      this.removePath()
+      map.forEachFeatureAtPixel(event.pixel,(feature, layer) => {
+        let car_imei = feature.get("name")
+        this.GPSData.forEach((element) => { if(element.imei === car_imei) this.popDevice = element});
+        let coordinate = event.coordinate;
+        this.refreshCardsInfo(this.popDevice, plate, spd, longitude, latitude);
+>>>>>>> origin/master
         overlay.setPosition(coordinate);
       });
     });
   }
 
+<<<<<<< HEAD
+=======
+  private refreshCardsInfo(gpsData:DeviceGps, plate: HTMLElement, spd: HTMLElement, longitude: HTMLElement, latitude: HTMLElement) {
+    plate.innerHTML= `Placa: ${gpsData.licensePlate}`;
+    spd.innerHTML= `Velocidad: ${gpsData.spd}km/h`;
+    longitude.innerHTML= `Longitud: ${gpsData.longitude}`;
+    latitude.innerHTML= `Latitud: ${gpsData.latitude}`;
+  }
+
+>>>>>>> origin/master
   private createOverlay(container: HTMLElement): Overlay{
     return new Overlay({
       element: container,
@@ -422,6 +558,7 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
+<<<<<<< HEAD
   getCenterPosition(array: Array<DeviceGps>) {
     let positon_length = array.length
 
@@ -453,4 +590,6 @@ export class MapComponent implements OnInit, OnDestroy {
     return [lat * 180 / Math.PI, lon * 180 / Math.PI]
   }
 
+=======
+>>>>>>> origin/master
 }

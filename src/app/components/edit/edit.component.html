@@ -1,0 +1,52 @@
+<h1 class="title">Edición de Vehículo</h1>
+
+<div class="container" style="margin-top: 10px">
+    <mat-spinner [hidden]="GPSData !== undefined" color="primary" style="margin: auto"></mat-spinner>
+    <mat-form-field *ngIf="GPSData?.content" appearance="standard" style="width: 100%; margin-bottom: 25px;">
+        <mat-label>Buscar vehiculos</mat-label>
+        <input matInput placeholder="ABC123..." [(ngModel)]="search">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-hint>Placa</mat-hint>
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel *ngFor="let data of GPSData?.content | filter:search" [expanded]="data.imei === id">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{data.vehicle | translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{data.licensePlate}}
+                        <mat-icon>edit</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="fill" style="margin-left: 10px;">
+                    <mat-label>Imei</mat-label>
+                    <input [(ngModel)]="data.imei" matInput>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="margin-left: 10px;">
+                    <mat-label>Placa/Matricula</mat-label>
+                    <input [(ngModel)]="data.licensePlate" matInput>
+                </mat-form-field>
+                <br>
+                <label>Tipo de vehiculo</label>
+                <mat-radio-group class="example-radio-group" aria-label="Select an option" [(ngModel)]="data.vehicle" style="margin-left: 10px;">
+                    <mat-radio-button color="primary" class="example-radio-button" value="CAR">
+                        Carro
+                    </mat-radio-button>
+                    <mat-radio-button color="primary" class="example-radio-button" value="BIKE">
+                        Moto
+                    </mat-radio-button>
+                </mat-radio-group>
+                <label>Última actualización: {{data.lastUpdate | date}}</label>
+                <mat-action-row>
+                    <button [hidden]="data.ignition === 'On'" mat-raised-button (click)="openUnlockDialog(data)">Desbloquear Vechiculo</button>
+                    <button [hidden]="data.ignition === 'Off'" mat-raised-button (click)="openTurnOffDialog(data)">Apagar Vechiculo</button>
+                    <button mat-raised-button color="primary" (click)="updateDevice(data)">Guardar</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-paginator [hidden]="!GPSData" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="loadNextPage($event)" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 .streaming {
+<<<<<<< HEAD
     overflow: hidden;
     height: 100vh;
     max-height: 100%;
@@ -18,4 +19,24 @@
 .center {
     height: 50%;
     text-align: center;
+=======
+    background-color: darkgrey;
+    width: 1280px;
+    height: 720px;
+    border-radius: 8px;
+}
+
+.cameras {
+    margin-bottom: 10px;
+    height: 128px;
+    width: 90%;
+    background-color: white;
+    border-radius: 8px;
+    img {
+        height: 100%;
+        width: 210px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+>>>>>>> origin/master
 }

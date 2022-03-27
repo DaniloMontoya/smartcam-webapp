@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+<<<<<<< HEAD
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Map, View } from 'ol';
 import { Tile } from 'ol/layer';
@@ -19,6 +20,8 @@ import { DEFAULT_ANCHOR, DEFAULT_ICON_PATH } from '../map/map.component';
 import { Streaming } from 'src/app/models/streaming.model';
 import FlvJs from 'flv.js';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
+=======
+>>>>>>> origin/master
 
 @Component({
   selector: 'app-streaming',
@@ -27,6 +30,7 @@ import { DOMAIN_URL } from 'src/environments/domain.prod';
 })
 export class StreamingComponent implements OnInit {
 
+<<<<<<< HEAD
   public streamStatus: Streaming
   public urlStreaming: string
 
@@ -235,6 +239,14 @@ export class StreamingComponent implements OnInit {
       })
     });
     return icon
+=======
+  id
+
+  constructor(private _Activatedroute:ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.id = this._Activatedroute.snapshot.paramMap.get("id");
+>>>>>>> origin/master
   }
 
 }

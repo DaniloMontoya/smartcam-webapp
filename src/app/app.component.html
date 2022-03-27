@@ -1,23 +1,39 @@
+<<<<<<< HEAD
 <!--app-login *ngIf="!auth.isLogged"></app-login-->
 <mat-sidenav-container autosize>
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
             <mat-list-item>
                 <span *ngIf="isExpanded" class="subtitle" style="width: 210px; font-size: 32px;"><b>{{client?.name | titlecase}}</b></span>
+=======
+<app-login *ngIf="!auth.isLogged"></app-login>
+<mat-sidenav-container *ngIf="auth.isLogged" autosize>
+    <mat-sidenav #sidenav mode="side" opened="true">
+        <mat-nav-list>
+            <mat-list-item>
+>>>>>>> origin/master
                 <mat-icon color="primary" (click)="isExpanded = !isExpanded" mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">menu</mat-icon>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item *ngFor="let nav of navigations" [routerLink]="nav.route">
                 <mat-icon color="primary" mat-list-icon>{{nav.icon}}</mat-icon>
+<<<<<<< HEAD
                 <span *ngIf="isExpanded" class="subtitle" style="width: 210px;">{{nav.name}}</span>
             </mat-list-item>
             <label class="end" *ngIf="isExpanded"><i>Developed by <b>Dev-Codes S.A.S</b> © {{year}}</i></label>
+=======
+                <span *ngIf="isExpanded" style="width: 210px;">{{nav.name}}</span>
+            </mat-list-item>
+            <label class="end" *ngIf="isExpanded">Designed by Dev-Codes S.A.S © 2021</label>
+            <!--button (click)="auth.logout()" *ngIf="isExpanded" mat-flat-button class="exit-button" color="primary">Cerrar Sesión</button-->
+>>>>>>> origin/master
         </mat-nav-list>
     </mat-sidenav>
     <!-- Body -->
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <img src="../assets/moviint-logo-vector.svg" height="46" width="70">
+<<<<<<< HEAD
             <div class="row toEndNav" style="line-height: 85%">
                 <div class="col-sm-6" style="font-size: 13px; margin-top: 7px;">
                     <b>Peggie Sue</b>
@@ -35,9 +51,22 @@
                 <mat-card-content class="example-button-row">
                     <button mat-raised-button [routerLink]="['/config']">Editar</button>
                     <button mat-raised-button color="primary" action="/oa/logout" method="POST" style="margin-left: 10px;">Cerrar Sesión</button>
+=======
+            <button class="toEndNav" mat-button [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger"><img src="../assets/saferbo.jpg"></button>
+        </mat-toolbar>
+        <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+            <mat-card style="max-width: 230px">
+                <mat-card-content class="example-button-row">
+                    <button mat-raised-button>Editar</button>
+                    <button mat-raised-button color="primary" (click)="auth.logout()" style="margin-left: 10px;">Cerrar Sesión</button>
+>>>>>>> origin/master
                 </mat-card-content>
             </mat-card>
         </mde-popover>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
+<<<<<<< HEAD
 </mat-sidenav-container>
+=======
+</mat-sidenav-container>
+>>>>>>> origin/master

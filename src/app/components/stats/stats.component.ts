@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+=======
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+>>>>>>> origin/master
 import { ActivatedRoute } from '@angular/router';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
@@ -17,6 +22,7 @@ export class StatsComponent implements OnInit {
   selectedRange: string = 'today'
   dateReportList: string [] = []
   distanceInKmList: number [] = []
+<<<<<<< HEAD
   showRangeDatepicker: boolean
   showDayDatepicker: boolean
 
@@ -26,6 +32,18 @@ export class StatsComponent implements OnInit {
 
   startDate: any
   endDate: any
+=======
+  showDatepicker: boolean
+
+  date = new Date();
+  dd = String(this.date.getDate()).padStart(2, '0');
+  ten_dd = String(this.date.getDate()-10).padStart(2, '0');
+  mm = String(this.date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  yyyy = this.date.getFullYear();
+
+  today = `${this.yyyy}-${this.mm}-${this.dd}`
+  ten_days_ago = `${this.yyyy}-${this.mm}-${this.ten_dd}`
+>>>>>>> origin/master
 
   range = new FormGroup({
     start: new FormControl(),
@@ -43,7 +61,10 @@ export class StatsComponent implements OnInit {
 
   barChartOptions: ChartOptions = {
     responsive: true,
+<<<<<<< HEAD
     maintainAspectRatio: false
+=======
+>>>>>>> origin/master
   }
   barChartType: ChartType = 'bar'
   barChartLegend = true
@@ -51,6 +72,7 @@ export class StatsComponent implements OnInit {
   barChartLabels: Label[] = []
   barChartPlugins = [];
 
+<<<<<<< HEAD
   distanceColumns: string[] = ['date', 'distance'];
   routesColumns: string[] = ['id', 'start', 'end', 'display'];
   reportList: any
@@ -63,6 +85,9 @@ export class StatsComponent implements OnInit {
   public routeList_table:any
 
   constructor(private _Activatedroute:ActivatedRoute, private rest:RestService, private dialog: MatDialog) { }
+=======
+  constructor(private _Activatedroute:ActivatedRoute, private rest:RestService) { }
+>>>>>>> origin/master
 
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
@@ -71,6 +96,7 @@ export class StatsComponent implements OnInit {
       this.licensePlate = response.licensePlate
       this.setGraph(response)
     })
+<<<<<<< HEAD
     this.rest.listRouteByGps(this.id).subscribe((response:any)=> {
       this.routeList = response.reverse()
       this.routeList_length = this.routeList.length
@@ -80,6 +106,11 @@ export class StatsComponent implements OnInit {
 
   setGraph(response:any) {
     this.reportList = response.report
+=======
+  }
+
+  setGraph(response:any) {
+>>>>>>> origin/master
     if(this.dateReportList.length>0) {
       this.dateReportList = []
       this.distanceInKmList = []
@@ -96,6 +127,7 @@ export class StatsComponent implements OnInit {
     switch (this.selectedRange) {
       case 'today':
         this.rest.dayReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
+<<<<<<< HEAD
         this.showRangeDatepicker = false
         this.showDayDatepicker = false
         break;
@@ -113,11 +145,23 @@ export class StatsComponent implements OnInit {
         this.rest.dayReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
         this.showRangeDatepicker = false
         this.showDayDatepicker = true
+=======
+        this.showDatepicker = false
+        break;
+      case 'week':
+        this.rest.weekReport(this.id).subscribe((response: any)=>{ this.setGraph(response) })
+        this.showDatepicker = false
+        break;
+      case 'custom':
+        this.rest.customDateReport(this.id, this.ten_days_ago, this.today).subscribe((response: any)=>{ this.setGraph(response) })
+        this.showDatepicker = true
+>>>>>>> origin/master
         break;
     }
   }
 
   startChange(event:any) {
+<<<<<<< HEAD
     this.startDate = event.value
     this.endDate = this.endDate ? this.endDate : this.today
     this.rest.customDateReport(this.id, this.formatDate(this.startDate.toString()), this.formatDate(this.endDate.toString())).subscribe((response: any)=>{ this.setGraph(response) })
@@ -276,6 +320,18 @@ export class RoutesModal implements OnInit {
 
     marker.setStyle(icon);
     return marker;
+=======
+    this.rest.customDateReport(this.id, this.parseDate(event.value), this.parseDate(String(new Date()))).subscribe((response: any)=>{ this.setGraph(response) })
+  }
+
+  parseDate(date:string) {
+    let a = new Date(Date.parse(date))
+    let year = a.getFullYear()
+    let month = String(a.getMonth()).length+1 === 1 ? `0${a.getMonth()+1}` : a.getMonth()+1
+    let day = String(a.getDate()).length === 1 ? `0${a.getDate()}` : a.getDate()
+
+    return `${year}-${month}-${day}`
+>>>>>>> origin/master
   }
 
 }

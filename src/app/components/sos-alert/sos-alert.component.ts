@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
+=======
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+>>>>>>> origin/master
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -18,16 +22,25 @@ export class SosAlertComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'licensePlate', 'vehicle', 'description', 'created', 'location'];
 
+<<<<<<< HEAD
   constructor(private rest: RestService) { }
 
   ngOnInit() {
     this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response:any)=>{
       this.sos_alerts = response
       this.length = response.totalElements
+=======
+  constructor(private rest: RestService, private changeDetectorRefs: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.rest.listAllSosAlert(this.pageIndex,this.pageSize).subscribe((response)=>{
+      this.sos_alerts = response
+>>>>>>> origin/master
     }), error => console.error(error)
   }
 
   loadNextPage(event) {
+<<<<<<< HEAD
     if(this.search) {
       this.rest.listAllSosAlertByLicensePlate(event.pageIndex, event.pageSize, this.search.toUpperCase()).subscribe((response:any) => {
         this.pageIndex = event.pageIndex
@@ -57,6 +70,21 @@ export class SosAlertComponent implements OnInit {
         this.length = response.totalElements
       }), error => console.error(error)
     }
+=======
+    this.rest.listAllSosAlert(event.pageIndex, event.pageSize).subscribe((response:any) => {
+      this.pageIndex = event.pageIndex
+      this.pageSize = event.pageSize
+      this.length = response.totalElements
+      this.sos_alerts = response
+    }, error => console.error(error));
+  }
+
+  onSearchPlate() {
+    this.rest.listAllSosAlertByLicensePlate(this.pageIndex,this.pageSize, this.search).subscribe((response:any)=>{
+      this.sos_alerts = response.content
+      this.changeDetectorRefs.detectChanges()
+    }), error => console.log(error)
+>>>>>>> origin/master
   }
 
 

@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+<<<<<<< HEAD
 import { Client } from 'src/app/models/client.model';
+=======
+>>>>>>> origin/master
 import { DeviceGps } from '../models/devicegps.model';
 
 @Injectable({
@@ -22,12 +25,17 @@ export class RestService {
     return this.http.get(`rest/v1/gps/listAll/${page}/${size}`)
   }
 
+<<<<<<< HEAD
   listAllByClientLicensePlate(page, size, licensePlate) {
     return this.http.get(`/rest/v1/gps/listAllBylicensePlate/${page}/${size}/${licensePlate}`)
   }
 
   listAllPositionByRoute(idRoute) {
     return this.http.get(`rest/v1/gps/routes/tracks/${idRoute}`)
+=======
+  listAllPositionByRoute(idRoute) {
+    return this.http.get(`/rest/v1/gps/routes/tracks/${idRoute}`)
+>>>>>>> origin/master
   }
 
   listAllSosAlert(page, size) {
@@ -66,6 +74,7 @@ export class RestService {
     return this.http.get(`rest/v1/gps/speedAlerts/${page}/${size}/${licensePlate}`)
   }
 
+<<<<<<< HEAD
   listAllCameras() {
     return this.http.get(`rest/cameras/v1/all`)
   }
@@ -106,4 +115,6 @@ export class RestService {
     return this.http.post(`/rest/client/uploadFile`, file)
   }
 
+=======
+>>>>>>> origin/master
 }

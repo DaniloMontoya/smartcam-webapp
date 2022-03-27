@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 @import '../../../assets/my-theme.scss';
 .map-container {
+=======
+.map-container {
+    padding: 0.5rem;
+>>>>>>> origin/master
     background-color: white;
 }
 
@@ -14,6 +19,7 @@
 
 .ol-popup {
     position: absolute;
+<<<<<<< HEAD
     backdrop-filter: blur(16px) contrast(.8);
     background-color: rgba(255 255 255 /62%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -23,6 +29,16 @@
     bottom: 12px;
     left: -50px;
     width: 333px;
+=======
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 306px;
+>>>>>>> origin/master
     text-align: left;
 }
 
@@ -96,12 +112,17 @@ body::-webkit-scrollbar-thumb:active {
 
 .small_mat_button {
     button {
+<<<<<<< HEAD
         width: 54px;
         height: 36px;
         min-width: unset!important;
         mat-icon {
             font-size: 24px;
         }
+=======
+        width: 50px!important;
+        min-width: unset!important;
+>>>>>>> origin/master
     }
 }
 
@@ -110,6 +131,7 @@ body::-webkit-scrollbar-thumb:active {
 }
 
 .red-icon {
+<<<<<<< HEAD
     color: mat-color($my-theme-warn) !important;
 }
 
@@ -120,4 +142,7 @@ body::-webkit-scrollbar-thumb:active {
     right: 0;
     backdrop-filter: blur(16px) contrast(.8);
     background-color: rgba(255 255 255 /62%);
+=======
+    color: red;
+>>>>>>> origin/master
 }
