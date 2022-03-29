@@ -27,11 +27,8 @@ export class NotifierService {
 
   clickAlert(imei:string) {
     this.deleteAlert(imei)
-<<<<<<< HEAD
     if(this.router.url.includes('/map'))
       return this.reloadMapView(imei)
-=======
->>>>>>> origin/master
     this.router.navigate([`/map/${imei}`])
   }
 
@@ -40,12 +37,9 @@ export class NotifierService {
     this.notifications.splice(index,1)
   }
 
-<<<<<<< HEAD
   reloadMapView(imei:string) {
     if(!this.router.url.includes(imei))
       this.router.navigate([`/map/${imei}`]).then(()=>{location.reload()})
   }
 
-=======
->>>>>>> origin/master
 }

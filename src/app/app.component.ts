@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { Client } from 'src/app/models/client.model';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 import { RestService } from './services/rest.service';
-=======
-import { AuthService } from './services/auth.service';
->>>>>>> origin/master
 
 @Component({
   selector: 'app-root',
@@ -17,7 +13,6 @@ export class AppComponent {
 
   isExpanded = false;
 
-<<<<<<< HEAD
   year = new Date().getFullYear()
 
   client: Client
@@ -36,9 +31,4 @@ export class AppComponent {
     {icon: 'settings', name: 'Configuración', route: '/config'}]
 
   constructor(private rest:RestService) { this.rest.getClient().subscribe((res: Client)=> this.client = res) }
-=======
-  navigations = [{icon: 'location_on', name: 'Mapa', route: 'map'}, {icon: 'videocam', name: 'Cámaras', route: 'streaming'}, {icon: 'video_library', name: 'Grabaciones', route: 'playback'}, {icon: 'edit_road', name: 'Edición', route: '/edit'}, {icon: 'taxi_alert', name: 'Alertas de velocidad', route: '/speed-alert'}, {icon: 'support', name: 'Alertas S.O.S', route: '/sos-alert'}]
-
-  constructor(public auth: AuthService) {}
->>>>>>> origin/master
 }

@@ -42,11 +42,7 @@
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-<<<<<<< HEAD
                             "node_modules/flv.js/dist/flv.min.js"
-=======
-                            "node_modules/@fortawesome/fontawesome-free/js/all.js"
->>>>>>> origin/master
                         ]
                     },
                     "configurations": {
@@ -66,22 +62,13 @@
                             "buildOptimizer": true,
                             "budgets": [{
                                     "type": "initial",
-<<<<<<< HEAD
                                     "maximumWarning": "3mb",
-=======
-                                    "maximumWarning": "2mb",
->>>>>>> origin/master
                                     "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-<<<<<<< HEAD
                                     "maximumWarning": "96kb",
                                     "maximumError": "128kb"
-=======
-                                    "maximumWarning": "6kb",
-                                    "maximumError": "10kb"
->>>>>>> origin/master
                                 }
                             ]
                         }
@@ -127,11 +114,7 @@
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-<<<<<<< HEAD
                             "node_modules/flv.js/dist/flv.min.js"
-=======
-                            "node_modules/@fortawesome/fontawesome-free/js/all.js"
->>>>>>> origin/master
                         ]
                     }
                 },

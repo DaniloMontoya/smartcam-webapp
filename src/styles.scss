@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-<<<<<<< HEAD
 @import '~@angular/material/theming';
 @import './assets/my-theme.scss';
 .primary-color {
@@ -15,8 +14,6 @@
     color: mat-color($my-theme-accent) !important;
 }
 
-=======
->>>>>>> origin/master
 .background-login-image {
     background-image: url("assets/14112502468_83bbd30092_b.jpg");
     height: 100%;
@@ -38,7 +35,6 @@ body {
 
 .title {
     font-size: 16px;
-<<<<<<< HEAD
     margin: 10px;
     color: mat-color($my-theme-primary);
 }
@@ -47,10 +43,6 @@ body {
     font-size: 16px;
     margin-left: 8px;
     color: mat-color($my-theme-primary);
-=======
-    margin: 10px 10px 10px 10px;
-    color: #007dc7;
->>>>>>> origin/master
 }
 
 .snackbar {
@@ -59,11 +51,7 @@ body {
 }
 
 .snackbar-red {
-<<<<<<< HEAD
     background-color: mat-color($my-theme-warn);
-=======
-    background-color: #ff2100;
->>>>>>> origin/master
     color: white;
     margin-top: 16px;
     border-radius: 4px;
@@ -73,12 +61,8 @@ body {
     .mat-simple-snackbar-action {
         color: white;
     }
-<<<<<<< HEAD
 }
 
 table {
     width: 100%;
 }
-=======
-}
->>>>>>> origin/master

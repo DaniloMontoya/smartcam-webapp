@@ -1,5 +1,4 @@
 @import '~@angular/material/theming';
-<<<<<<< HEAD
 
 /**always include only once per project*/
 
@@ -8,12 +7,6 @@
 /**define 3 theme color
 mat-palette accepts $palette-name, main, lighter and darker variants*/
 
-=======
-// always include only once per project
-@include mat-core();
-// define 3 theme color
-// mat-palette accepts $palette-name, main, lighter and darker variants
->>>>>>> origin/master
 $my-mat-primary:( 50: #e0f2fa, 100: #b3def2, 200: #80c8e9, 300: #4db1e0, 400: #26a1d9, 500: #0090d2, 600: #0088cd, 700: #007dc7, 800: #0073c1, 900: #0061b6, contrast:( 800: #fff, 600:#fff, 900: #fff, ));
 $my-mat-accent:( 50: #fafbfc, 100: #f3f6f7, 200: #ebf0f2, 300: #e3eaed, 400: #dde6e9, 500: #d7e1e5, 600: #d3dde2, 700: #cdd9de, 800: #c7d5da, 900: #becdd3, contrast:( 800: #fff, 600:#fff, 900: #fff, ));
 $my-mat-warn:( 50: #ffe6e0, 100: #ffc0b3, 200: #ff9680, 300: #ff6b4d, 400: #ff4c26, 500: #ff2c00, 600: #ff2700, 700: #ff2100, 800: #ff1b00, 900: #ff1000, contrast:( 800: #fff, 600:#fff, 900: #fff, ));
@@ -21,13 +14,9 @@ $gray-color:#696662;
 $my-theme-primary: mat-palette($my-mat-primary);
 $my-theme-accent: mat-palette($my-mat-accent, 700);
 $my-theme-warn: mat-palette($my-mat-warn, 500);
-<<<<<<< HEAD
 
 /**create theme (use mat-dark-theme for themes with dark backgrounds)*/
 
-=======
-// create theme (use mat-dark-theme for themes with dark backgrounds)
->>>>>>> origin/master
 $my-theme: mat-light-theme( $my-theme-primary, $my-theme-accent, $my-theme-warn);
 @include angular-material-theme($my-theme);
 .mat-flat-button.mat-primary,

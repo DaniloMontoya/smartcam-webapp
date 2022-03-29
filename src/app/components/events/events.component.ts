@@ -144,7 +144,7 @@ export class EventsModal implements OnInit {
   }
 
   private createPathMark(path: any, path_id): Feature<any>{
-    let icon_path = `${DEFAULT_ICON_PATH}track_move.svg`
+    let icon_path = `${DEFAULT_ICON_PATH}alert.svg`
 
     let marker = new Feature({
       geometry: new Point(fromLonLat([path.longitude, path.lattiude])),

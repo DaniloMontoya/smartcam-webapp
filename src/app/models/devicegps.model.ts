@@ -12,9 +12,6 @@ export class DeviceGps {
   longitude: number
   spd: number
   vehicle: string
-<<<<<<< HEAD
   cameraStatus: string
   imeiCamera: string
-=======
->>>>>>> origin/master
   }

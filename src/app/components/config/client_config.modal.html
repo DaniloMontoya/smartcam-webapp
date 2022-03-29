@@ -45,12 +45,9 @@
             <div class="row">
                 <input type="file" style="display: none" (change)="uploadClientImage($event)" #fileUpload>
                 <div class="file-upload">
-
-                    {{fileName || "Sin imágen por subir aún."}}
-
                     <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
-                     <mat-icon>attach_file</mat-icon>
-                 </button>
+                      <mat-icon>attach_file</mat-icon>
+                    </button> {{fileName || "Sin imágen por subir aún."}}
                 </div>
             </div>
             <br>
