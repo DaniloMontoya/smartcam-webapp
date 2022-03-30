@@ -64,6 +64,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
       if(response.licensePlate === data.licensePlate) {
         data.cameraStatus = response.cameraStatus
         data.lastStatus = response.cameraStatus
+        data.ignition = response.ignition
         data.lastUpdated = new Date().toString();
       }
     })
