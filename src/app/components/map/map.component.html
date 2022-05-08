@@ -45,7 +45,7 @@
             <h6 id="spd" class="text-muted">Velocidad: {{popDevice?.spd}}km/h</h6>
             <h6 id="longitude" class="text-muted">Longitud: {{popDevice?.longitude}}</h6>
             <h6 id="latitude" class="text-muted">Latitud: {{popDevice?.latitude}}</h6>
-            <h6 id="lastUpdate" class="text-muted">Última actualización: {{popDevice?.lastUpdate | date:'mediumTime'}}</h6>
+            <h6 id="lastUpdate" class="text-muted">Última actualización: <br style="margin-bottom: 4px;">{{popDevice?.lastUpdate | date:'medium'}}</h6>
             <div class="small_mat_button">
                 <button *ngIf="popDevice?.imeiCamera && popDevice?.cameraStatus === 'ACTIVE'" [routerLink]="['/streaming',popDevice?.imei]" mat-button><mat-icon color="primary">videocam</mat-icon></button>
                 <button *ngIf="!popDevice?.imeiCamera || popDevice?.cameraStatus !== 'ACTIVE'" mat-button disabled><mat-icon>videocam_off</mat-icon></button>

@@ -1,4 +1,4 @@
-const HOST_PROD = location.hostname
+const HOST_PROD = location.host
 const HOST_DEV = "costera.moviint.net"
 const HOST_DEMO = "demo.moviint.net:8090"
 const HOST_TEST = `localhost:8090`

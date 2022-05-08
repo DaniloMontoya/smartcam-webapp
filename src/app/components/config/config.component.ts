@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RestService } from 'src/app/services/rest.service';
 import { Client } from 'src/app/models/client.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-config',
@@ -94,6 +95,7 @@ export class ClientConfigModal implements OnInit {
     public dialogRef: MatDialogRef<ClientConfigModal>,
     private snackBar: MatSnackBar,
     private rest: RestService,
+    private user: UserService,
     public dialog: MatDialog) { }
 
     ngOnInit(): void {
@@ -121,21 +123,26 @@ export class ClientConfigModal implements OnInit {
     async uploadClientImage(event) {
       const file:File = event.target.files[0];
         if (file) {
+          let reader = new FileReader();
+          reader.onload = (event: any) => { this.user.clientImageUrl = event.target.result };
+          reader.readAsDataURL(event.target.files[0]);
+
           this.fileName = file.name;
           const formData = new FormData();
-          formData.append("thumbnail", file);
+          formData.append("file", file);
           await this.rest.uploadClientImage(formData).subscribe({
             next: data => {
                 let snack = this.snackBar.open(`La imágen ${this.fileName} se ha terminado de subir`)
                 setTimeout(() => {
                   snack.dismiss()
-                }, 1000);
+                }, 2000);
             },
             error: error => {
+              this.fileName = undefined
               let snack = this.snackBar.open('La subida ha fallado!!')
               setTimeout(() => {
                 snack.dismiss()
-              }, 1000);
+              }, 2000);
                 console.error('There was an error!', error.message);
             }
           })

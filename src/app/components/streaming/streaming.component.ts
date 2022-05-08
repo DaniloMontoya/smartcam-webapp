@@ -19,6 +19,7 @@ import { DEFAULT_ANCHOR, DEFAULT_ICON_PATH } from '../map/map.component';
 import { Streaming } from 'src/app/models/streaming.model';
 import FlvJs from 'flv.js';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-streaming',
@@ -45,7 +46,7 @@ export class StreamingComponent implements OnInit {
 
   public displayedColumns: string[] = ['imei', 'vehiculo', 'placa', 'camara', 'imeiCamara'];
 
-  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService) { }
+  constructor(private _Activatedroute:ActivatedRoute, public rest: RestService, private user: UserService) { }
 
   ngOnInit() {
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
@@ -144,7 +145,7 @@ export class StreamingComponent implements OnInit {
     this.map.getView().setZoom(16)
     this.rest.askStreamingCamera(device?.imeiCamera).subscribe((response:Streaming)=>{
       this.streamStatus = response
-      this.urlStreaming = `${DOMAIN_URL}:8091/streaming/video?imei=${device.imeiCamera}&access_token=${response.token}`
+      this.urlStreaming = `${DOMAIN_URL}:8091/streaming/video?imei=${device.imeiCamera}&access_token=${this.user.getToken()}`
     })
   }
 

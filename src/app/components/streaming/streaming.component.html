@@ -17,13 +17,13 @@
             <div id="minimap" class="map"></div>
             <mat-card style="margin-top: 16px;">
                 <mat-card-content style="font-size: 21px;">
-                    <Label><b class="primary-color">Placa</b><br> {{carro.licensePlate}}</Label>
+                    <Label><b class="primary-color">Placa</b><br> {{carro?.licensePlate}}</Label>
                     <br>
-                    <Label><b class="primary-color">Vehículo</b><br> {{carro.vehicle | translate}}</Label>
+                    <Label><b class="primary-color">Vehículo</b><br> {{carro?.vehicle | translate}}</Label>
                     <br>
-                    <Label><b class="primary-color">Cámara</b><br> {{carro.cameraStatus | translate}}</Label>
+                    <Label><b class="primary-color">Cámara</b><br> {{carro?.cameraStatus | translate}}</Label>
                     <br>
-                    <Label><b class="primary-color">Imei Cámara</b><br> {{carro.imeiCamera}}</Label>
+                    <Label><b class="primary-color">Imei Cámara</b><br> {{carro?.imeiCamera}}</Label>
                 </mat-card-content>
             </mat-card>
         </div>

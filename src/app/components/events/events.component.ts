@@ -17,14 +17,12 @@ export class EventsComponent implements OnInit {
   public pageIndex = 0;
   public pageSizeOptions: number[] = [13, 30, 50, 100];
 
-  private selectedImei: string
+  public selectedImei: string
 
   constructor(private rest: RestService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.rest.getAllDMS(this.pageIndex, this.pageSize).subscribe((response:any)=>{
-      this.pageIndex = this.pageIndex
-      this.pageSize = this.pageSize
       this.length = response.totalElements
       this.event_list = response
     }, error => console.error(error));

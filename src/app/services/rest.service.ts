@@ -106,4 +106,8 @@ export class RestService {
     return this.http.post(`/rest/client/uploadFile`, file)
   }
 
+  getUiMe() {
+    return this.http.get(`ui/me`)
+  }
+
 }

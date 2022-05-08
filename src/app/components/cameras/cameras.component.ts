@@ -4,6 +4,7 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { Streaming } from 'src/app/models/streaming.model';
 import { RestService } from 'src/app/services/rest.service';
+import { UserService } from 'src/app/services/user.service';
 import { DOMAIN_URL } from 'src/environments/domain.prod';
 
 @Component({
@@ -83,10 +84,10 @@ export class CamerasComponent implements OnInit, OnDestroy {
 export class StreamModal {
   url:string
   response:any
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<StreamModal>, private rest: RestService, private user:UserService) {
     this.rest.askStreamingCamera(data.imei).subscribe((res:Streaming)=>{
       this.response = res
-      this.url = `${DOMAIN_URL}:8091/streaming/video?imei=${data.imei}&access_token=${res.token}`
+      this.url = `${DOMAIN_URL}:8091/streaming/video?imei=${data.imei}&access_token=${this.user.getToken()}`
     }), error => {
       this.dialogRef.close()
     };
