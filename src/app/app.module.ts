@@ -25,7 +25,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { AddModal, ClientConfigModal, ConfigComponent, DeleteUserModal, EditUserModal } from './components/config/config.component';
 import { VideoComponent } from './components/video/video.component';
 import { EventsComponent } from './components/events/events.component';
-import {EditComponent } from './components/edit/edit.component'
+import {EditComponent } from './components/edit/edit.component';
+import { AlertsComponent } from './components/alerts/alerts.component'
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {EditComponent } from './components/edit/edit.component'
     EditUserModal,
     DeleteUserModal,
     EventsComponent,
-    EditComponent
+    EditComponent,
+    AlertsComponent
   ],
   imports: [
     FormsModule,

@@ -40,9 +40,9 @@
                 </mat-radio-group>
                 <label>Última actualización: {{data.lastUpdate | date}}</label>
                 <mat-action-row>
-                    <button [hidden]="data.ignition === 'On'" mat-raised-button (click)="openUnlockDialog(data)">Desbloquear Vechiculo</button>
-                    <button [hidden]="data.ignition === 'Off'" mat-raised-button (click)="openTurnOffDialog(data)">Apagar Vechiculo</button>
-                    <button mat-raised-button color="primary" (click)="updateDevice(data)">Guardar</button>
+                    <button [hidden]="data.ignition === 'On'" *ngIf="data.vehicle" mat-raised-button (click)="openUnlockDialog(data)">Desbloquear Vehiculo</button>
+                    <button [hidden]="data.ignition === 'Off'" *ngIf="data.vehicle" mat-raised-button (click)="openTurnOffDialog(data)">Apagar Vehiculo</button>
+                    <button mat-raised-button color="primary" (click)="updateDevice(data)">Actualizar</button>
                 </mat-action-row>
             </mat-expansion-panel>
         </mat-accordion>

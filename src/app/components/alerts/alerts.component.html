@@ -1,0 +1,14 @@
+<h1 class="title">Alertas</h1>
+<div class="container-fluid">
+    <mat-form-field>
+        <mat-select [(ngModel)]="selectedAlert">
+            <mat-option *ngFor="let alert of alerts" [value]="alert.value">
+                {{alert.viewValue}}
+                <mat-icon class="mat-18">{{alert.icon}}</mat-icon>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <app-events *ngIf="selectedAlert === 0"></app-events>
+    <app-sos-alert *ngIf="selectedAlert === 1"></app-sos-alert>
+    <app-speed-alert *ngIf="selectedAlert === 2"></app-speed-alert>
+</div>

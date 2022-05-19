@@ -21,10 +21,8 @@ export class AppComponent {
     {icon: 'location_on', name: 'Mapa', route: '/map'},
     {icon: 'directions_car', name: 'Vehículos', route: '/vehicles'},
     {icon: 'video_camera_back', name: 'Cámaras disponibles', route: '/cameras'},
-    {icon: 'notifications_paused', name: 'Eventos DMS', route: '/events'},
+    {icon: 'warning', name: 'Alertas', route: '/alerts'},
     //{icon: 'video_library', name: 'Grabaciones', route: '/video'},
-    {icon: 'taxi_alert', name: 'Alertas de velocidad', route: '/speed-alert'},
-    {icon: 'support', name: 'Alertas S.O.S', route: '/sos-alert'},
     //{icon: 'warning_amber', name: 'Control de alertas', route: '/alert-config'},
     {icon: 'settings', name: 'Configuración', route: '/config'}]
 

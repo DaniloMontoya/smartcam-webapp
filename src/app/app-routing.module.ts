@@ -11,6 +11,7 @@ import { CamerasComponent } from './components/cameras/cameras.component';
 import { ConfigComponent } from './components/config/config.component';
 import { VideoComponent } from './components/video/video.component';
 import { EventsComponent } from './components/events/events.component';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full'  },
@@ -18,15 +19,13 @@ const routes: Routes = [
   { path: 'map/:id', component: MapComponent },
   { path: 'vehicles', component: VehiclesComponent },
   { path: 'vehicles/:plate', component: VehiclesComponent },
-  { path: 'speed-alert', component: SpeedAlertComponent },
-  { path: 'sos-alert', component: SosAlertComponent },
+  { path: 'alerts', component: AlertsComponent },
   { path: 'stats/:id', component: StatsComponent },
   { path: 'streaming/:id', component: StreamingComponent },
   //{ path: 'alert-config', component: AlertConfigComponent },
   { path: 'cameras', component: CamerasComponent },
   { path: 'config', component: ConfigComponent},
   //{ path: 'video', component: VideoComponent},
-  { path: 'events', component: EventsComponent}
 ];
 
 @NgModule({
