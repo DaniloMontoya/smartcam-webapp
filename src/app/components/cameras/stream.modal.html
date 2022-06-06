@@ -1,8 +1,5 @@
-<iframe [src]="url | safe:'resourceUrl'" style="height: 375px; width: 72vw;" *ngIf="response else loadingStream"></iframe>
+<iframe [src]="url | safe:'resourceUrl'" style="height: 420px; width: 73vw;"></iframe>
 <h1 *ngIf="response" class="title" style="font-size: 24px;">
     <b>{{data.licensePlate}}</b>
     <p style="font-size: 16px;">{{data.imei}}</p>
 </h1>
-<ng-template #loadingStream>
-    <mat-spinner color="primary" style="margin: auto; margin-bottom: 10px;"></mat-spinner>
-</ng-template>

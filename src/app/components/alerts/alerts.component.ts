@@ -17,8 +17,8 @@ export class AlertsComponent implements OnInit {
 
   alerts: Alert[] = [
     {value: 0, viewValue: 'Eventos DMS', icon: 'notifications_paused'},
-    {value: 1, viewValue: 'Alertas De Seguridad', icon: 'taxi_alert'},
-    {value: 2, viewValue: 'Alertas S.O.S', icon: 'support'},
+    {value: 1, viewValue: 'Alertas S.O.S', icon: 'support'},
+    {value: 2, viewValue: 'Alertas De Velocidad', icon: 'taxi_alert'},
   ];
 
   constructor() { }
